@@ -1,0 +1,99 @@
+name: Deploy SSG to GitHub Pages
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve public URL
+        id: site
+        env:
+          CUSTOM_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+          CUSTOM_PUBLIC_PATH: ${{ secrets.PUBLIC_PATH }}
+        run: |
+          set -euo pipefail
+          OWNER="${GITHUB_REPOSITORY_OWNER}"
+          REPO="${GITHUB_REPOSITORY#*/}"
+
+          if [ -n "${CUSTOM_PUBLIC_PATH}" ]; then
+            PUBLIC_PATH="${CUSTOM_PUBLIC_PATH}"
+          elif [ "${REPO}" = "${OWNER}.github.io" ]; then
+            PUBLIC_PATH="/"
+          else
+            PUBLIC_PATH="/${REPO}/"
+          fi
+
+          case "${PUBLIC_PATH}" in
+            /*) ;;
+            *) PUBLIC_PATH="/${PUBLIC_PATH}" ;;
+          esac
+          case "${PUBLIC_PATH}" in
+            /) ;;
+            */) ;;
+            *) PUBLIC_PATH="${PUBLIC_PATH}/" ;;
+          esac
+
+          if [ -n "${CUSTOM_SITE_URL}" ]; then
+            PUBLIC_SITE_URL="${CUSTOM_SITE_URL%/}"
+          elif [ "${PUBLIC_PATH}" = "/" ]; then
+            PUBLIC_SITE_URL="https://${OWNER}.github.io"
+          else
+            PUBLIC_SITE_URL="https://${OWNER}.github.io/${REPO}"
+          fi
+
+          echo "public_path=${PUBLIC_PATH}" >> "${GITHUB_OUTPUT}"
+          echo "site_url=${PUBLIC_SITE_URL}" >> "${GITHUB_OUTPUT}"
+
+      - name: Build SSG
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          PUBLIC_SITE_URL: ${{ steps.site.outputs.site_url }}
+          PUBLIC_PATH: ${{ steps.site.outputs.public_path }}
+          BUSINESS_LAT: ${{ secrets.BUSINESS_LAT }}
+          BUSINESS_LNG: ${{ secrets.BUSINESS_LNG }}
+        run: npm run build:ssg
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/ssg
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

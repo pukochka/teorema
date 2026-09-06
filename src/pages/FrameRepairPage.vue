@@ -29,7 +29,7 @@
       <div class="row q-col-gutter-xl">
         <div class="col-12 col-md-5">
           <q-img
-            src="/images/frame/bench.jpg"
+            :src="publicAsset('/images/frame/bench.jpg')"
             alt="Стапель Teorema Service"
             ratio="4/3"
           >
@@ -69,6 +69,7 @@ import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import { frameRepairStages } from "@/data/services";
 import { useSeo } from "@/composables/useSeo";
+import { publicAsset } from "@/utils/publicAsset";
 
 useSeo();
 </script>

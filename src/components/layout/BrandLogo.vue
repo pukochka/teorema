@@ -5,7 +5,7 @@
     aria-label="Teorema Service"
   >
     <q-img
-      src="/logo.svg"
+      :src="publicAsset('/logo.svg')"
       alt="Teorema Service"
       width="44px"
       height="44px"
@@ -24,6 +24,10 @@
     </div>
   </router-link>
 </template>
+
+<script setup lang="ts">
+import { publicAsset } from "@/utils/publicAsset";
+</script>
 
 <style lang="scss" scoped>
 .brand-logo {

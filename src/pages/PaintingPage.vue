@@ -13,7 +13,7 @@
     <section class="page-shell q-pb-xl">
       <div class="painting-hero">
         <q-img
-          src="/images/painting/booth.jpg"
+          :src="publicAsset('/images/painting/booth.jpg')"
           alt="Покрасочная камера Teorema Service"
           fit="cover"
           class="absolute-full"
@@ -75,6 +75,7 @@ import SectionHeading from "@/components/common/SectionHeading.vue";
 import VideoSlot from "@/components/common/VideoSlot.vue";
 import { paintingServices } from "@/data/services";
 import { useSeo } from "@/composables/useSeo";
+import { publicAsset } from "@/utils/publicAsset";
 
 useSeo();
 </script>

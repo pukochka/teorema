@@ -3,8 +3,8 @@
     <video
       v-if="src"
       class="video-slot__media"
-      :src="src"
-      :poster="poster"
+      :src="src ? publicAsset(src) : src"
+      :poster="poster ? publicAsset(poster) : poster"
       controls
       playsinline
       preload="metadata"
@@ -19,6 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import { publicAsset } from "@/utils/publicAsset";
+
 withDefaults(
   defineProps<{
     src?: string;

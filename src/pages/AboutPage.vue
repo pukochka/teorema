@@ -14,7 +14,7 @@
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-6">
           <q-img
-            src="/images/workshop/overview.jpg"
+            :src="publicAsset('/images/workshop/overview.jpg')"
             alt="Мастерская Teorema Service"
             ratio="4/3"
           >
@@ -99,7 +99,7 @@
           </q-list>
           <div class="q-mt-md">
             <q-img
-              src="/images/team/team.jpg"
+              :src="publicAsset('/images/team/team.jpg')"
               alt="Команда Teorema Service"
               ratio="16/9"
             >
@@ -129,6 +129,7 @@ import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import VideoSlot from "@/components/common/VideoSlot.vue";
 import { useSeo } from "@/composables/useSeo";
+import { publicAsset } from "@/utils/publicAsset";
 
 useSeo();
 </script>

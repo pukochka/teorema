@@ -1,6 +1,6 @@
 # Teorema Service
 
-Коммерческий сайт СТО **Teorema Service** на Quasar + Vue 3 + TypeScript + Pinia + Supabase + SSR.
+Коммерческий сайт СТО **Teorema Service** на Quasar + Vue 3 + TypeScript + Pinia + Supabase. Для продакшена собирается как SSG и публикуется на GitHub Pages.
 
 ## Installation
 
@@ -46,6 +46,20 @@ SPA-сборка:
 npm run build
 ```
 
+SSG-сборка (статический сайт):
+
+```bash
+npm run build:ssg
+```
+
+или
+
+```bash
+quasar build -m ssg
+```
+
+Результат лежит в `dist/ssg`.
+
 Проверка типов и линта:
 
 ```bash
@@ -61,15 +75,38 @@ npm run lint
 SUPABASE_URL=
 SUPABASE_ANON_KEY=
 PUBLIC_SITE_URL=
+PUBLIC_PATH=
 BUSINESS_LAT=
 BUSINESS_LNG=
 ```
 
 - `SUPABASE_URL` и `SUPABASE_ANON_KEY` — публичные ключи проекта Supabase.
 - `PUBLIC_SITE_URL` — канонический адрес сайта, например `https://example.com`. Нужен для SEO (canonical, Open Graph, sitemap).
+- `PUBLIC_PATH` — префикс URL, если сайт открывается не из корня домена. Для GitHub Pages репозитория `teorema` это `/teorema/`. Для своего домена оставьте пустым.
 - `BUSINESS_LAT` и `BUSINESS_LNG` — координаты сервиса. Пока они пустые, на странице контактов показывается ссылка на поиск по адресу.
 
 Секреты Resend и `service_role` в frontend `.env` не класть. Они задаются только в Supabase Edge Functions.
+
+## Публикация на GitHub Pages
+
+Каждый push в `master` или `main` собирает SSG и публикует сайт через GitHub Actions (`.github/workflows/deploy-ssg.yml`).
+
+1. В репозитории откройте **Settings → Pages**.
+2. В **Build and deployment → Source** выберите **GitHub Actions**.
+3. Добавьте секреты в **Settings → Secrets and variables → Actions**, если они нужны на проде:
+
+```text
+SUPABASE_URL
+SUPABASE_ANON_KEY
+BUSINESS_LAT
+BUSINESS_LNG
+PUBLIC_SITE_URL
+PUBLIC_PATH
+```
+
+`PUBLIC_SITE_URL` и `PUBLIC_PATH` можно не задавать: workflow сам подставит адрес вида `https://<owner>.github.io/<repo>/`. Если будет свой домен, задайте `PUBLIC_SITE_URL` (без слэша в конце) и `PUBLIC_PATH` как `/`.
+
+Сайт репозитория: https://pukochka.github.io/teorema/
 
 ## Контакты
 
@@ -192,7 +229,7 @@ npx supabase functions deploy submit-fleet-request
 
 ## SEO
 
-- SSR-режим Quasar
+- SSR и SSG-режимы Quasar
 - `useMeta` / `useSeo` на страницах
 - Open Graph, canonical, robots
 - JSON-LD `AutoRepair`

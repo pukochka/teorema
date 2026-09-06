@@ -59,7 +59,7 @@
         <div class="col-12 col-md-6">
           <div class="home-hero__media">
             <q-img
-              src="/images/hero/workshop.jpg"
+              :src="publicAsset('/images/hero/workshop.jpg')"
               alt="Цех Teorema Service: ремонт, кузовные работы и покраска"
               ratio="4/3"
               fit="cover"
@@ -106,6 +106,7 @@ import MessengerButtons from "@/components/common/MessengerButtons.vue";
 import PhoneButton from "@/components/common/PhoneButton.vue";
 import { useMessengers } from "@/composables/useMessengers";
 import { useSiteStore } from "@/stores/site";
+import { publicAsset } from "@/utils/publicAsset";
 
 const site = useSiteStore().config;
 const { hasMessengers } = useMessengers();

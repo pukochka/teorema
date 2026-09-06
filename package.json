@@ -19,8 +19,10 @@
     "lint:check": "oxfmt --check && oxlint",
     "dev": "quasar dev",
     "dev:ssr": "quasar dev -m ssr",
+    "dev:ssg": "quasar dev -m ssg",
     "build": "quasar build",
     "build:ssr": "quasar build -m ssr",
+    "build:ssg": "quasar build -m ssg",
     "typecheck": "vue-tsc --noEmit",
     "postinstall": "quasar prepare --silent"
   },

@@ -1,7 +1,7 @@
 <template>
   <q-card class="surface-card full-height" flat bordered>
     <q-img
-      :src="work.after || work.before"
+      :src="publicAsset(work.after || work.before)"
       :alt="`${work.brand} ${work.model}`"
       ratio="16/10"
     >
@@ -55,7 +55,7 @@
           <div class="q-mt-md">
             <div class="text-weight-medium q-mb-sm">Процесс</div>
             <q-img
-              :src="work.process"
+              :src="publicAsset(work.process)"
               :alt="`Процесс ремонта ${work.brand} ${work.model}`"
               ratio="16/9"
             >
@@ -81,6 +81,7 @@ import { ref } from "vue";
 import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import BeforeAfterSlider from "./BeforeAfterSlider.vue";
 import type { WorkProject } from "@/types/work";
+import { publicAsset } from "@/utils/publicAsset";
 
 defineProps<{
   work: WorkProject;

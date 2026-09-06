@@ -29,7 +29,7 @@
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-6">
           <q-img
-            src="/images/commercial/van.jpg"
+            :src="publicAsset('/images/commercial/van.jpg')"
             alt="Коммерческий автомобиль в сервисе"
             ratio="16/10"
           >
@@ -71,6 +71,7 @@ import {
   commercialServices
 } from "@/data/commercialVehicles";
 import { useSeo } from "@/composables/useSeo";
+import { publicAsset } from "@/utils/publicAsset";
 
 useSeo();
 </script>

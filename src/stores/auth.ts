@@ -1,6 +1,7 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
+import { isClient } from "@/utils/ssr";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -19,9 +20,11 @@ export const useAuthStore = defineStore("auth", {
 
       const { data } = await supabase.auth.getSession();
       this.session = data.session;
-      supabase.auth.onAuthStateChange((_event, session) => {
-        this.session = session;
-      });
+      if (isClient) {
+        supabase.auth.onAuthStateChange((_event, session) => {
+          this.session = session;
+        });
+      }
       this.ready = true;
     },
     async signIn(email: string, password: string) {

@@ -10,6 +10,7 @@ interface ImportMetaEnv {
   readonly SUPABASE_URL?: string;
   readonly SUPABASE_ANON_KEY?: string;
   readonly PUBLIC_SITE_URL?: string;
+  readonly PUBLIC_PATH?: string;
   readonly BUSINESS_LAT?: string;
   readonly BUSINESS_LNG?: string;
 }
@@ -19,6 +20,7 @@ declare namespace NodeJS {
     SUPABASE_URL?: string;
     SUPABASE_ANON_KEY?: string;
     PUBLIC_SITE_URL?: string;
+    PUBLIC_PATH?: string;
     BUSINESS_LAT?: string;
     BUSINESS_LNG?: string;
   }

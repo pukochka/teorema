@@ -35,7 +35,7 @@
       </div>
       <div class="col-12 col-md-6">
         <q-img
-          :src="image"
+          :src="publicAsset(image)"
           :alt="imageAlt"
           ratio="16/10"
           fit="cover"
@@ -64,6 +64,7 @@
 import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import VideoSlot from "@/components/common/VideoSlot.vue";
+import { publicAsset } from "@/utils/publicAsset";
 
 withDefaults(
   defineProps<{

@@ -1,7 +1,45 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { defineConfig } from "#q-app";
+
+function normalizePublicPath(value = ""): string {
+  const trimmed = value.trim();
+  if (!trimmed || trimmed === "/") return "/";
+  const withLeading = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+  return withLeading.endsWith("/") ? withLeading : `${withLeading}/`;
+}
+
+function rewritePublishedSeoFiles(distDir: string) {
+  const siteUrl = (process.env.PUBLIC_SITE_URL || "").replace(/\/$/, "");
+  const publicPath = normalizePublicPath(process.env.PUBLIC_PATH);
+  const adminPath =
+    publicPath === "/" ? "/admin" : `${publicPath.replace(/\/$/, "")}/admin`;
+
+  const robotsPath = join(distDir, "robots.txt");
+  if (existsSync(robotsPath)) {
+    const sitemapLine = siteUrl
+      ? `Sitemap: ${siteUrl}/sitemap.xml`
+      : "Sitemap: /sitemap.xml";
+    writeFileSync(
+      robotsPath,
+      `User-agent: *\nAllow: /\nDisallow: ${adminPath}\n\n${sitemapLine}\n`
+    );
+  }
+
+  const sitemapPath = join(distDir, "sitemap.xml");
+  if (siteUrl && existsSync(sitemapPath)) {
+    const sitemap = readFileSync(sitemapPath, "utf8").replaceAll(
+      "<loc>/",
+      `<loc>${siteUrl}/`
+    );
+    writeFileSync(sitemapPath, sitemap);
+  }
+
+  writeFileSync(join(distDir, ".nojekyll"), "");
+}
 
 export default defineConfig(ctx => {
   return {
@@ -13,6 +51,7 @@ export default defineConfig(ctx => {
 
     build: {
       target: {},
+      publicPath: normalizePublicPath(process.env.PUBLIC_PATH),
 
       typescript: {
         strict: true,
@@ -31,6 +70,15 @@ export default defineConfig(ctx => {
         PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL || "",
         BUSINESS_LAT: process.env.BUSINESS_LAT || "",
         BUSINESS_LNG: process.env.BUSINESS_LNG || ""
+      },
+
+      afterBuild({ quasarConf }) {
+        if (!ctx.mode.ssg) return;
+        const distDir =
+          typeof quasarConf.build.distDir === "string"
+            ? quasarConf.build.distDir
+            : join(ctx.appPaths.appDir, "dist/ssg");
+        rewritePublishedSeoFiles(distDir);
       },
 
       vitePlugins: [
@@ -69,7 +117,11 @@ export default defineConfig(ctx => {
       middlewares: ["render"]
     },
 
-    ssg: {},
+    ssg: {
+      pwa: false,
+      error404HtmlFilename: "404.html",
+      ssgRendererDirectoryIndexes: true
+    },
 
     pwa: {
       workboxMode: "GenerateSW"

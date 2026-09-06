@@ -11,7 +11,12 @@
     @keydown="onKeydown"
   >
     <div class="ba-slider__pane ba-slider__pane--after">
-      <q-img :src="afterSrc" :alt="afterAlt" ratio="16/10" fit="cover">
+      <q-img
+        :src="publicAsset(afterSrc)"
+        :alt="afterAlt"
+        ratio="16/10"
+        fit="cover"
+      >
         <template #error>
           <MediaPlaceholder
             :label="afterPlaceholder"
@@ -35,7 +40,12 @@
       class="ba-slider__pane ba-slider__pane--before"
       :style="{ width: `${position}%` }"
     >
-      <q-img :src="beforeSrc" :alt="beforeAlt" ratio="16/10" fit="cover">
+      <q-img
+        :src="publicAsset(beforeSrc)"
+        :alt="beforeAlt"
+        ratio="16/10"
+        fit="cover"
+      >
         <template #error>
           <MediaPlaceholder
             :label="beforePlaceholder"
@@ -63,6 +73,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from "vue";
 import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
+import { publicAsset } from "@/utils/publicAsset";
 
 withDefaults(
   defineProps<{

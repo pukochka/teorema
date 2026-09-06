@@ -12,7 +12,11 @@
         class="col-12 col-md-4"
       >
         <q-card class="surface-card full-height" flat bordered>
-          <q-img :src="item.image" :alt="item.imageAlt" ratio="16/10">
+          <q-img
+            :src="publicAsset(item.image)"
+            :alt="item.imageAlt"
+            ratio="16/10"
+          >
             <template #error>
               <MediaPlaceholder
                 label="Фото оборудования появится здесь"
@@ -43,4 +47,5 @@
 import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import { equipmentItems } from "@/data/equipment";
+import { publicAsset } from "@/utils/publicAsset";
 </script>

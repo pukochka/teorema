@@ -25,7 +25,7 @@
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-6">
           <q-img
-            src="/images/workshop/body.jpg"
+            :src="publicAsset('/images/workshop/body.jpg')"
             alt="Кузовной цех Teorema Service"
             ratio="16/10"
           >
@@ -81,6 +81,7 @@ import SectionHeading from "@/components/common/SectionHeading.vue";
 import RepairTimeline from "@/components/home/RepairTimeline.vue";
 import { bodyRepairSections } from "@/data/services";
 import { useSeo } from "@/composables/useSeo";
+import { publicAsset } from "@/utils/publicAsset";
 
 useSeo();
 </script>
