@@ -71,8 +71,7 @@ jobs:
 
       - name: Build SSG
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_ENABLED: "false"
           PUBLIC_SITE_URL: ${{ steps.site.outputs.site_url }}
           PUBLIC_PATH: ${{ steps.site.outputs.public_path }}
           BUSINESS_LAT: ${{ secrets.BUSINESS_LAT }}

@@ -12,7 +12,8 @@
           </q-card-section>
           <q-card-section>
             <q-banner v-if="!configured" class="bg-warning text-dark q-mb-md">
-              Supabase не настроен. Заполните SUPABASE_URL и SUPABASE_ANON_KEY.
+              Supabase временно отключён. Админка и отправка заявок на сервер
+              недоступны.
             </q-banner>
             <q-form class="column q-gutter-md" @submit.prevent="submit">
               <q-input

@@ -7,6 +7,7 @@
  * https://quasar.dev/quasar-cli-vite/handling-import-meta-env#type-inference
  */
 interface ImportMetaEnv {
+  readonly SUPABASE_ENABLED?: string;
   readonly SUPABASE_URL?: string;
   readonly SUPABASE_ANON_KEY?: string;
   readonly PUBLIC_SITE_URL?: string;
@@ -17,6 +18,7 @@ interface ImportMetaEnv {
 
 declare namespace NodeJS {
   interface ProcessEnv {
+    SUPABASE_ENABLED?: string;
     SUPABASE_URL?: string;
     SUPABASE_ANON_KEY?: string;
     PUBLIC_SITE_URL?: string;

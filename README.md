@@ -72,6 +72,7 @@ npm run lint
 Скопируйте `.env.example` в `.env` и заполните:
 
 ```text
+SUPABASE_ENABLED=false
 SUPABASE_URL=
 SUPABASE_ANON_KEY=
 PUBLIC_SITE_URL=
@@ -80,6 +81,7 @@ BUSINESS_LAT=
 BUSINESS_LNG=
 ```
 
+- `SUPABASE_ENABLED` — сейчас `false`: клиент Supabase не создаётся, контент и заявки идут без бэкенда. Чтобы включить обратно, поставьте `true` и заполните ключи.
 - `SUPABASE_URL` и `SUPABASE_ANON_KEY` — публичные ключи проекта Supabase.
 - `PUBLIC_SITE_URL` — канонический адрес сайта, например `https://example.com`. Нужен для SEO (canonical, Open Graph, sitemap).
 - `PUBLIC_PATH` — префикс URL, если сайт открывается не из корня домена. Для GitHub Pages репозитория `teorema` это `/teorema/`. Для своего домена оставьте пустым.
@@ -96,8 +98,6 @@ BUSINESS_LNG=
 3. Добавьте секреты в **Settings → Secrets and variables → Actions**, если они нужны на проде:
 
 ```text
-SUPABASE_URL
-SUPABASE_ANON_KEY
 BUSINESS_LAT
 BUSINESS_LNG
 PUBLIC_SITE_URL

@@ -65,6 +65,7 @@ export default defineConfig(ctx => {
       vueRouterMode: "history",
 
       defineEnv: {
+        SUPABASE_ENABLED: process.env.SUPABASE_ENABLED || "false",
         SUPABASE_URL: process.env.SUPABASE_URL || "",
         SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || "",
         PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL || "",

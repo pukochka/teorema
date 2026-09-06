@@ -8,7 +8,7 @@ export { supabase };
 export default defineBoot(async () => {
   if (!supabase && isClient) {
     console.info(
-      "Supabase не настроен. Заполните SUPABASE_URL и SUPABASE_ANON_KEY."
+      "Supabase временно отключён. Сайт работает на локальных данных."
     );
   }
 
