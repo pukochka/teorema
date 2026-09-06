@@ -140,7 +140,7 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
 import { Dialog, Notify } from "quasar";
-import { workCategoryOptions } from "@/data/works";
+import { workCategoryLabels, workCategoryOptions } from "@/data/works";
 import { fileExtension, uploadSiteMedia } from "@/composables/useAdminMedia";
 import { useSeo } from "@/composables/useSeo";
 import { supabase } from "@/lib/supabase";
@@ -164,7 +164,7 @@ const afterFile = ref<File | null>(null);
 const form = reactive({
   brand: "",
   model: "",
-  category: "body" as Exclude<WorkCategory, "all">,
+  category: "repair" as Exclude<WorkCategory, "all">,
   damage: "",
   before_url: "",
   process_url: "",
@@ -174,10 +174,7 @@ const form = reactive({
 });
 
 function categoryLabel(category: string) {
-  return (
-    workCategoryOptions.find(item => item.category === category)?.label ||
-    category
-  );
+  return workCategoryLabels[category] || category;
 }
 
 function resetForm() {
@@ -188,7 +185,7 @@ function resetForm() {
   afterFile.value = null;
   form.brand = "";
   form.model = "";
-  form.category = "body";
+  form.category = "repair";
   form.damage = "";
   form.before_url = "";
   form.process_url = "";

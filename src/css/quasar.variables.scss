@@ -6,7 +6,7 @@ $brand-yellow: #f4d329;
 $brand-white: #ffffff;
 $brand-dark: #102a36;
 $brand-light: #f5f8fa;
-$brand-gray: #667782;
+$brand-gray: #475569;
 
 $primary: #0785b4;
 $secondary: #f5a83d;
@@ -27,12 +27,13 @@ $generic-border-radius: $radius-md;
 $button-border-radius: 10px;
 $card-border-radius: $radius-md;
 
-$typography-font-family: "Manrope", system-ui, sans-serif;
+$font-family: "Geometria", system-ui, sans-serif;
+$typography-font-family: $font-family;
 $body-font-size: 16px;
 $body-line-height: 1.65;
 $button-font-size: 15px;
 $button-padding: 12px 20px;
-$button-font-weight: 600;
+$button-font-weight: 700;
 
 $header-text-color: #ffffff;
 $layout-shadow: 0 8px 24px rgba(16, 42, 54, 0.06);

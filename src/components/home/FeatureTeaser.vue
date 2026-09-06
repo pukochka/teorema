@@ -1,10 +1,10 @@
 <template>
   <section class="page-section page-shell">
-    <div
-      class="row q-col-gutter-xl items-center"
-      :class="reverse ? 'reverse' : ''"
-    >
-      <div class="col-12 col-md-6">
+    <div class="row q-col-gutter-xl items-center">
+      <div
+        class="col-12 col-md-6"
+        :class="{ 'order-md-last': reverse }"
+      >
         <SectionHeading :eyebrow="eyebrow" :title="title" :subtitle="text" />
         <q-list v-if="items.length" class="q-mt-md">
           <q-item v-for="item in items" :key="item" class="q-px-none">
@@ -33,7 +33,10 @@
           />
         </div>
       </div>
-      <div class="col-12 col-md-6">
+      <div
+        class="col-12 col-md-6"
+        :class="{ 'order-md-first': reverse }"
+      >
         <q-img
           :src="publicAsset(image)"
           :alt="imageAlt"

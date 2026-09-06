@@ -6,7 +6,7 @@
         heading-tag="h1"
         eyebrow="Контакты"
         title="Teorema Service"
-        subtitle="Адрес, телефоны и график работы."
+        subtitle="Адрес, телефон и график работы."
       />
 
       <div class="row q-col-gutter-lg q-mt-lg">

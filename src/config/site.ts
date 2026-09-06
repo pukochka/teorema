@@ -8,10 +8,14 @@ import type {
   WorkingHours
 } from "@/types/contact";
 
-export const PHONE_PRIMARY_RAW = "+375256669313";
-export const PHONE_PRIMARY_DISPLAY = "+375 25 666 93 13";
-export const PHONE_SECONDARY_RAW = "+375445189432";
-export const PHONE_SECONDARY_DISPLAY = "+375 44 518 94 32";
+export const PHONE_PRIMARY_RAW = "+375445189432";
+export const PHONE_PRIMARY_DISPLAY = "+375 44 518 94 32";
+
+export const BUSINESS_CITY = "Минск";
+export const BUSINESS_STREET = "ул. Солтыса, 108";
+export const BUSINESS_ADDRESS = `г. ${BUSINESS_CITY}, ${BUSINESS_STREET}`;
+export const BUSINESS_LAT_DEFAULT = 53.89247;
+export const BUSINESS_LNG_DEFAULT = 27.65518;
 
 export const SITE_DOMAIN = "teorema-service.site";
 export const DEFAULT_SITE_URL = `https://${SITE_DOMAIN}`;
@@ -27,7 +31,7 @@ function envText(key: keyof ImportMetaEnv): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-function envNumber(key: string): number | null {
+function envNumber(key: keyof ImportMetaEnv): number | null {
   const value = envText(key);
   if (!value) return null;
   const parsed = Number(value);
@@ -39,11 +43,6 @@ export const sitePhones: SitePhone[] = [
     raw: PHONE_PRIMARY_RAW,
     display: PHONE_PRIMARY_DISPLAY,
     label: "Основной"
-  },
-  {
-    raw: PHONE_SECONDARY_RAW,
-    display: PHONE_SECONDARY_DISPLAY,
-    label: "Дополнительный"
   }
 ];
 
@@ -54,9 +53,9 @@ export const workingHours: WorkingHours = {
 };
 
 export const businessLocation: BusinessLocation = {
-  address: "ул. Солтыса, 10В",
-  lat: envNumber("BUSINESS_LAT"),
-  lng: envNumber("BUSINESS_LNG")
+  address: BUSINESS_ADDRESS,
+  lat: envNumber("BUSINESS_LAT") ?? BUSINESS_LAT_DEFAULT,
+  lng: envNumber("BUSINESS_LNG") ?? BUSINESS_LNG_DEFAULT
 };
 
 export const siteCta: SiteCta = {
@@ -73,9 +72,9 @@ export const siteCta: SiteCta = {
 };
 
 export const seoDefaults: SeoDefaults = {
-  title: "СТО Teorema Service — ремонт, кузовные работы и покраска автомобилей",
+  title: "СТО Teorema Service — ремонт, стапель, покраска и полировка",
   description:
-    "СТО Teorema Service: техническое обслуживание автомобилей, кузовной ремонт, покраска в покрасочной камере, стапельные работы и обслуживание коммерческого транспорта.",
+    "СТО Teorema Service в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка. ул. Солтыса, 108.",
   siteUrl: envText("PUBLIC_SITE_URL") || DEFAULT_SITE_URL,
   ogImage: "/images/og-cover.jpg",
   locale: "ru_BY",
@@ -138,11 +137,11 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   name: "Teorema Service",
   legalName: "Teorema Service",
-  tagline: "СТО, кузовной ремонт и покраска автомобилей",
+  tagline: "СТО, ремонт любой сложности, стапель, покраска и полировка",
   shortDescription:
-    "Техническое обслуживание, кузовной ремонт и покраска легковых автомобилей и коммерческого транспорта.",
+    "СТО в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка.",
   about:
-    "Teorema Service — комплексный автосервис, где технический ремонт, кузовные работы, стапель и покраска доступны в одном месте.",
+    "Teorema Service — автосервис в Минске. Делаем СТО и ремонт любой сложности, работаем на стапеле, красим в камере и полируем кузов.",
   email: "",
   phones: sitePhones,
   address: businessLocation.address,
@@ -152,7 +151,7 @@ export const siteConfig: SiteConfig = {
   businessLocation,
   cta: siteCta,
   seo: seoDefaults,
-  logo: "/logo.svg"
+  logo: "/logo.png"
 };
 
 export function cloneSiteConfig(source: SiteConfig = siteConfig): SiteConfig {

@@ -1,3 +1,24 @@
+export type CoreServiceId =
+  | "auto-service"
+  | "repair"
+  | "frame-repair"
+  | "painting"
+  | "polishing";
+
+export interface CoreService {
+  id: CoreServiceId;
+  title: string;
+  description: string;
+  pageTitle: string;
+  pageSubtitle: string;
+  icon: string;
+  route: string;
+  cta: string;
+  seoTitle: string;
+  seoDescription: string;
+  estimatePreferred: boolean;
+}
+
 export interface Service {
   id: string;
   title: string;
@@ -8,21 +29,12 @@ export interface Service {
   cta?: string;
 }
 
-export interface ServiceCategory {
-  id: string;
-  title: string;
-  icon: string;
-  description: string;
-  items: string[];
-}
-
 export interface DirectionCard {
   id: string;
   title: string;
   description: string;
   icon: string;
   route: string;
-  items: string[];
   cta: string;
 }
 
@@ -45,4 +57,5 @@ export interface PriceCategory {
   icon: string;
   note: string;
   items: string[];
+  estimatePreferred: boolean;
 }

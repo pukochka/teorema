@@ -22,29 +22,9 @@
               <q-banner rounded class="q-mb-md bg-blue-1">
                 {{ category.note }}
               </q-banner>
-              <q-list>
-                <q-item
-                  v-for="item in category.items"
-                  :key="item"
-                  class="prices-item"
-                >
-                  <q-item-section>
-                    <q-item-label>{{ item }}</q-item-label>
-                    <q-item-label class="q-mt-xs">
-                      <q-chip color="accent" text-color="dark"
-                        >по диагностике</q-chip
-                      >
-                    </q-item-label>
-                  </q-item-section>
-                </q-item>
-              </q-list>
               <q-separator class="q-my-md" />
               <q-btn
-                v-if="
-                  category.id === 'body' ||
-                  category.id === 'painting' ||
-                  category.id === 'frame'
-                "
+                v-if="category.estimatePreferred"
                 unelevated
                 no-caps
                 color="secondary"

@@ -1,12 +1,11 @@
 import type { NavItem } from "@/types/navigation";
+import { coreServices } from "./services";
 
-export const headerServices: NavItem[] = [
-  { label: "Автосервис", to: "/auto-service", icon: "mdi-wrench" },
-  { label: "Кузовной ремонт", to: "/body-repair", icon: "mdi-car-wrench" },
-  { label: "Покраска", to: "/painting", icon: "mdi-format-paint" },
-  { label: "Стапель", to: "/frame-repair", icon: "mdi-ruler-square" },
-  { label: "Грузовики", to: "/commercial-vehicles", icon: "mdi-truck" }
-];
+export const headerServices: NavItem[] = coreServices.map(service => ({
+  label: service.title,
+  to: service.route,
+  icon: service.icon
+}));
 
 export const headerNav: NavItem[] = [
   { label: "Наши работы", to: "/works", icon: "mdi-image-multiple" },
@@ -14,13 +13,10 @@ export const headerNav: NavItem[] = [
   { label: "Контакты", to: "/contacts", icon: "mdi-map-marker" }
 ];
 
-export const footerServices: NavItem[] = [
-  { label: "Автосервис", to: "/auto-service" },
-  { label: "Кузовной ремонт", to: "/body-repair" },
-  { label: "Покраска", to: "/painting" },
-  { label: "Стапель", to: "/frame-repair" },
-  { label: "Коммерческий транспорт", to: "/commercial-vehicles" }
-];
+export const footerServices: NavItem[] = headerServices.map(item => ({
+  label: item.label,
+  to: item.to
+}));
 
 export const footerClients: NavItem[] = [
   { label: "Онлайн-запись", to: "/booking" },
@@ -33,8 +29,6 @@ export const footerClients: NavItem[] = [
 export const drawerNav: NavItem[] = [
   { label: "Главная", to: "/", icon: "mdi-home" },
   ...headerServices,
-  { label: "Автопарки", to: "/fleet", icon: "mdi-office-building" },
-  { label: "Оборудование", to: "/equipment", icon: "mdi-robot-industrial" },
   ...headerNav,
   { label: "О нас", to: "/about", icon: "mdi-information" }
 ];

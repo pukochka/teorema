@@ -37,8 +37,8 @@
       outline
       no-caps
       color="primary"
-      to="/equipment"
-      label="Всё оборудование"
+      to="/painting"
+      label="Покрасочная камера"
     />
   </section>
 </template>

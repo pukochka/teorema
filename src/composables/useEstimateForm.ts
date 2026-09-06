@@ -1,14 +1,13 @@
 import { reactive, ref } from "vue";
 import { Notify } from "quasar";
 import { supabase } from "@/boot/supabase";
+import { serviceFormOptions } from "@/data/services";
 import { useLeadsStore } from "@/stores/leads";
 import type {
   EstimateFormPayload,
   EstimatePhoto,
   EstimateSubmitResult
 } from "@/types/estimate";
-import { VEHICLE_TYPE_OPTIONS } from "@/types/vehicle";
-import { ESTIMATE_SERVICE_OPTIONS } from "@/types/estimate";
 import { isClient } from "@/utils/ssr";
 import {
   ALLOWED_PHOTO_TYPES,
@@ -20,13 +19,6 @@ function createEmptyEstimate(): EstimateFormPayload {
   return {
     name: "",
     phone: "",
-    email: "",
-    vehicleType: null,
-    brand: "",
-    model: "",
-    year: null,
-    plate: "",
-    vin: "",
     serviceType: null,
     description: "",
     consent: false,
@@ -145,13 +137,6 @@ export function useEstimateForm() {
       const payload = {
         name: form.name.trim(),
         phone: form.phone.trim(),
-        email: form.email.trim(),
-        vehicleType: form.vehicleType,
-        brand: form.brand.trim(),
-        model: form.model.trim(),
-        year: form.year,
-        plate: form.plate.trim(),
-        vin: form.vin.trim(),
         serviceType: form.serviceType,
         description: form.description.trim(),
         startedAt: form.startedAt,
@@ -220,8 +205,7 @@ export function useEstimateForm() {
     isSubmitting,
     isSuccess,
     errorMessage,
-    vehicleTypeOptions: VEHICLE_TYPE_OPTIONS,
-    serviceOptions: ESTIMATE_SERVICE_OPTIONS,
+    serviceOptions: serviceFormOptions,
     addFiles,
     removePhoto,
     submit,

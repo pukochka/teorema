@@ -85,7 +85,7 @@ BUSINESS_LNG=
 - `SUPABASE_URL` и `SUPABASE_ANON_KEY` — публичные ключи проекта Supabase.
 - `PUBLIC_SITE_URL` — канонический адрес сайта. По умолчанию `https://teorema-service.site`.
 - `PUBLIC_PATH` — для своего домена оставляйте `/`.
-- `BUSINESS_LAT` и `BUSINESS_LNG` — координаты сервиса. Пока они пустые, на странице контактов показывается ссылка на поиск по адресу.
+- `BUSINESS_LAT` и `BUSINESS_LNG` — необязательное уточнение координат. По умолчанию карта показывает **г. Минск, ул. Солтыса, 108**.
 
 Секреты Resend и `service_role` в frontend `.env` не класть. Они задаются только в Supabase Edge Functions.
 
@@ -132,29 +132,17 @@ www  CNAME  pukochka.github.io
 src/config/site.ts
 ```
 
-Там же телефоны, адрес, график, CTA и SEO-значения по умолчанию.
+Там же телефон, адрес, график, CTA и SEO-значения по умолчанию.
 
 ## Логотип
 
-Положите файл сюда:
+Файл логотипа:
 
 ```text
-public/logo.svg
+src/assets/logo.png
 ```
 
-или
-
-```text
-public/logo.png
-```
-
-Сейчас используется текстово-графический знак `public/logo.svg`. Фотографию вывески в логотип не конвертировать.
-
-Референс вывески можно положить в:
-
-```text
-public/brand-reference.png
-```
+Он используется в шапке, подвале, мобильном меню и как favicon. При сборке копия кладётся в `public/logo.png`.
 
 ## Фотографии и видео
 

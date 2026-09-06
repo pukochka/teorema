@@ -1,13 +1,6 @@
-import type { VehicleType } from "./vehicle";
+import type { CoreServiceId } from "./service";
 
-export type EstimateServiceType =
-  | "body-repair"
-  | "painting"
-  | "frame"
-  | "accident"
-  | "mechanical"
-  | "diagnostics"
-  | "other";
+export type EstimateServiceType = CoreServiceId;
 
 export interface EstimatePhoto {
   id: string;
@@ -21,13 +14,6 @@ export interface EstimatePhoto {
 export interface EstimateFormPayload {
   name: string;
   phone: string;
-  email: string;
-  vehicleType: VehicleType | null;
-  brand: string;
-  model: string;
-  year: number | null;
-  plate: string;
-  vin: string;
   serviceType: EstimateServiceType | null;
   description: string;
   consent: boolean;
@@ -41,16 +27,3 @@ export interface EstimateSubmitResult {
   id?: string;
   message: string;
 }
-
-export const ESTIMATE_SERVICE_OPTIONS: {
-  label: string;
-  value: EstimateServiceType;
-}[] = [
-  { label: "Кузовной ремонт", value: "body-repair" },
-  { label: "Покраска", value: "painting" },
-  { label: "Стапельные работы", value: "frame" },
-  { label: "Ремонт после ДТП", value: "accident" },
-  { label: "Механический ремонт", value: "mechanical" },
-  { label: "Диагностика", value: "diagnostics" },
-  { label: "Другое", value: "other" }
-];

@@ -34,16 +34,3 @@ useSeo({
   robots: "noindex, nofollow"
 });
 </script>
-
-<style lang="scss" scoped>
-.error-page {
-  background: linear-gradient(135deg, #056b91, #102a36);
-}
-
-.error-page__code {
-  font-family: "Oswald", sans-serif;
-  font-size: clamp(6rem, 18vw, 12rem);
-  line-height: 1;
-  color: #f4d329;
-}
-</style>

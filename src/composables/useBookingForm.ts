@@ -1,22 +1,15 @@
 import { reactive, ref } from "vue";
 import { Notify } from "quasar";
 import { supabase } from "@/boot/supabase";
-import { bookingServiceOptions } from "@/data/services";
+import { serviceFormOptions } from "@/data/services";
 import { useLeadsStore } from "@/stores/leads";
 import type { BookingFormPayload, BookingSubmitResult } from "@/types/booking";
-import { VEHICLE_TYPE_OPTIONS } from "@/types/vehicle";
 
 function createEmptyBooking(): BookingFormPayload {
   return {
     name: "",
     phone: "",
-    brand: "",
-    model: "",
-    year: null,
-    vehicleType: null,
     service: "",
-    preferredDate: "",
-    preferredTime: "",
     comment: "",
     consent: false,
     website: "",
@@ -48,13 +41,7 @@ export function useBookingForm() {
       const payload = {
         name: form.name.trim(),
         phone: form.phone.trim(),
-        brand: form.brand.trim(),
-        model: form.model.trim(),
-        year: form.year,
-        vehicleType: form.vehicleType,
         service: form.service,
-        preferredDate: form.preferredDate,
-        preferredTime: form.preferredTime,
         comment: form.comment.trim(),
         startedAt: form.startedAt,
         turnstileToken: form.turnstileToken || ""
@@ -105,8 +92,7 @@ export function useBookingForm() {
     isSubmitting,
     isSuccess,
     errorMessage,
-    vehicleTypeOptions: VEHICLE_TYPE_OPTIONS,
-    serviceOptions: bookingServiceOptions,
+    serviceOptions: serviceFormOptions,
     submit,
     reset
   };

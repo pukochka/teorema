@@ -5,7 +5,7 @@
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-4">
           <BrandLogo />
-          <p class="q-mt-md q-mb-none" style="max-width: 22rem">
+          <p class="app-footer__about q-mt-md q-mb-none">
             {{ site.shortDescription }}
           </p>
         </div>
@@ -16,8 +16,8 @@
               v-for="item in footerServices"
               :key="item.to"
               clickable
-              :to="item.to"
               class="q-px-none"
+              :to="item.to"
             >
               <q-item-section>{{ item.label }}</q-item-section>
             </q-item>
@@ -30,8 +30,8 @@
               v-for="item in footerClients"
               :key="item.to"
               clickable
-              :to="item.to"
               class="q-px-none"
+              :to="item.to"
             >
               <q-item-section>{{ item.label }}</q-item-section>
             </q-item>
@@ -40,7 +40,11 @@
         <div class="col-12 col-md-3">
           <div class="app-footer__title">Контакты</div>
           <q-list>
-            <q-item class="q-px-none">
+            <q-item
+              clickable
+              class="q-px-none"
+              to="/contacts"
+            >
               <q-item-section avatar>
                 <q-icon name="mdi-map-marker" />
               </q-item-section>
@@ -51,8 +55,8 @@
               :key="phone.raw"
               clickable
               tag="a"
-              :href="toTelHref(phone.raw)"
               class="q-px-none"
+              :href="toTelHref(phone.raw)"
             >
               <q-item-section avatar>
                 <q-icon name="mdi-phone" />
@@ -70,10 +74,10 @@
               :key="messenger.id"
               clickable
               tag="a"
+              class="q-px-none"
+              rel="noopener noreferrer"
               :href="hrefFor(messenger)"
               :target="messenger.id === 'telegram' ? '_blank' : undefined"
-              rel="noopener noreferrer"
-              class="q-px-none"
             >
               <q-item-section avatar>
                 <q-icon :name="messenger.icon" />
@@ -87,7 +91,12 @@
       <div class="row items-center justify-between q-col-gutter-sm">
         <div class="col-12 col-sm-auto"> © {{ year }} {{ site.name }} </div>
         <div class="col-12 col-sm-auto">
-          <q-btn flat no-caps to="/privacy" label="Обработка данных" />
+          <q-btn
+            flat
+            no-caps
+            to="/privacy"
+            label="Обработка данных"
+          />
         </div>
       </div>
     </div>
@@ -107,28 +116,3 @@ const site = useSiteStore().config;
 const { messengers, hrefFor } = useMessengers();
 const year = computed(() => new Date().getFullYear());
 </script>
-
-<style lang="scss" scoped>
-.app-footer {
-  position: relative;
-  color: #fff;
-  background: #102a36;
-}
-
-.app-footer__title {
-  margin-bottom: 12px;
-  font-family: "Oswald", sans-serif;
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.app-footer :deep(.q-item) {
-  color: #fff;
-  min-height: 44px;
-}
-
-.app-footer :deep(.brand-logo__sub) {
-  color: #f5a83d;
-}
-</style>

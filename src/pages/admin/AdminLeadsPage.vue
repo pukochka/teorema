@@ -37,7 +37,7 @@
               <td>{{ item.name }}</td>
               <td>{{ item.phone }}</td>
               <td>{{ vehicleLabel(item.brand, item.model, item.year) }}</td>
-              <td>{{ item.service }}</td>
+              <td>{{ coreServiceLabel(item.service) }}</td>
               <td>{{
                 [item.preferred_date, item.preferred_time]
                   .filter(Boolean)
@@ -69,7 +69,7 @@
               <td>{{ item.name }}</td>
               <td>{{ item.phone }}</td>
               <td>{{ vehicleLabel(item.brand, item.model, item.year) }}</td>
-              <td>{{ item.service_type }}</td>
+              <td>{{ coreServiceLabel(item.service_type) }}</td>
               <td>{{ item.photo_paths?.length || 0 }}</td>
               <td>{{ item.description || "—" }}</td>
             </tr>
@@ -120,6 +120,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { Notify } from "quasar";
+import { coreServiceLabel } from "@/data/services";
 import { useSeo } from "@/composables/useSeo";
 import { supabase } from "@/lib/supabase";
 import type { BookingRow, EstimateRow, FleetRow } from "@/types/content";

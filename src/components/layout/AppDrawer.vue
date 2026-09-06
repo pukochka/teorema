@@ -1,13 +1,16 @@
 <template>
   <q-drawer
     v-model="site.drawerOpen"
-    side="left"
     overlay
     bordered
-    :width="320"
+    side="left"
     class="app-drawer"
+    :width="320"
   >
-    <div class="q-pa-md">
+    <div
+      class="q-pa-md"
+      @click="site.setDrawer(false)"
+    >
       <BrandLogo />
     </div>
     <q-separator />
@@ -31,19 +34,32 @@
     </q-list>
     <q-separator />
     <q-list>
-      <q-item>
+      <q-item
+        clickable
+        tag="a"
+        :href="toTelHref(primaryRaw)"
+        @click="site.setDrawer(false)"
+      >
         <q-item-section avatar>
-          <q-icon name="mdi-phone" color="primary" />
+          <q-icon
+            name="mdi-phone"
+            color="primary"
+          />
         </q-item-section>
         <q-item-section>
-          <q-item-label>
-            <a :href="toTelHref(primaryRaw)">{{ primaryDisplay }}</a>
-          </q-item-label>
+          <q-item-label>{{ primaryDisplay }}</q-item-label>
         </q-item-section>
       </q-item>
-      <q-item>
+      <q-item
+        clickable
+        to="/contacts"
+        @click="site.setDrawer(false)"
+      >
         <q-item-section avatar>
-          <q-icon name="mdi-map-marker" color="primary" />
+          <q-icon
+            name="mdi-map-marker"
+            color="primary"
+          />
         </q-item-section>
         <q-item-section>
           <q-item-label>{{ site.config.address }}</q-item-label>
@@ -51,7 +67,10 @@
       </q-item>
       <q-item>
         <q-item-section avatar>
-          <q-icon name="mdi-clock-outline" color="primary" />
+          <q-icon
+            name="mdi-clock-outline"
+            color="primary"
+          />
         </q-item-section>
         <q-item-section>
           <q-item-label>{{ site.config.workingHours.display }}</q-item-label>
@@ -97,9 +116,3 @@ const site = useSiteStore();
 const { primaryDisplay, primaryRaw, toTelHref } = usePhone();
 const menu = drawerNav;
 </script>
-
-<style lang="scss" scoped>
-.app-drawer__nav :deep(.q-item) {
-  min-height: 48px;
-}
-</style>

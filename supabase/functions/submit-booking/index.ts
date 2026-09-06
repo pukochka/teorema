@@ -7,6 +7,7 @@ import {
   isTooFast,
   optionalText,
   requirePhone,
+  requireService,
   requireText
 } from "../_shared/validation.ts";
 
@@ -26,7 +27,7 @@ Deno.serve(async (req: Request) => {
 
     const name = requireText(body.name, "Имя");
     const phone = requirePhone(body.phone);
-    const service = requireText(body.service, "Услуга");
+    const service = requireService(body.service);
     const ip = getClientIp(req);
     await assertRateLimit("bookings", phone, ip);
 
@@ -63,8 +64,6 @@ Deno.serve(async (req: Request) => {
         fields: {
           Имя: name,
           Телефон: phone,
-          Автомобиль:
-            `${optionalText(body.brand)} ${optionalText(body.model)}`.trim(),
           Услуга: service,
           Комментарий: optionalText(body.comment)
         }

@@ -6,7 +6,7 @@
         heading-tag="h1"
         eyebrow="О сервисе"
         title="Teorema Service"
-        subtitle="Teorema Service — комплексный автосервис, где технический ремонт, кузовные работы, стапель и покраска доступны в одном месте."
+        subtitle="Автосервис в Минске: СТО, ремонт любой сложности, стапель, покрасочная камера и полировка."
       />
     </section>
 
@@ -32,68 +32,19 @@
         </div>
         <div class="col-12 col-md-6">
           <q-list>
-            <q-item>
-              <q-item-section avatar
-                ><q-icon name="mdi-wrench" color="primary"
-              /></q-item-section>
-              <q-item-section>
-                <q-item-label>Автосервис</q-item-label>
-                <q-item-label caption
-                  >ТО, диагностика и механический ремонт</q-item-label
-                >
+            <q-item
+              :key="service.id"
+              v-for="service in coreServices"
+            >
+              <q-item-section avatar>
+                <q-icon
+                  color="primary"
+                  :name="service.icon"
+                />
               </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar
-                ><q-icon name="mdi-car-wrench" color="primary"
-              /></q-item-section>
               <q-item-section>
-                <q-item-label>Кузовной цех</q-item-label>
-                <q-item-label caption
-                  >Рихтовка, сварка, замена элементов</q-item-label
-                >
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar
-                ><q-icon name="mdi-format-paint" color="primary"
-              /></q-item-section>
-              <q-item-section>
-                <q-item-label>Покрасочная камера</q-item-label>
-                <q-item-label caption>Локальная и полная окраска</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar
-                ><q-icon name="mdi-ruler-square" color="primary"
-              /></q-item-section>
-              <q-item-section>
-                <q-item-label>Стапель</q-item-label>
-                <q-item-label caption
-                  >Восстановление геометрии кузова</q-item-label
-                >
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar
-                ><q-icon name="mdi-truck" color="primary"
-              /></q-item-section>
-              <q-item-section>
-                <q-item-label>Коммерческие автомобили</q-item-label>
-                <q-item-label caption
-                  >Микроавтобусы, фургоны, малые грузовики</q-item-label
-                >
-              </q-item-section>
-            </q-item>
-            <q-item>
-              <q-item-section avatar
-                ><q-icon name="mdi-hub" color="primary"
-              /></q-item-section>
-              <q-item-section>
-                <q-item-label>Комплексный подход</q-item-label>
-                <q-item-label caption
-                  >Механика и кузов в одном сервисе</q-item-label
-                >
+                <q-item-label>{{ service.title }}</q-item-label>
+                <q-item-label caption>{{ service.description }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -128,6 +79,7 @@ import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import VideoSlot from "@/components/common/VideoSlot.vue";
+import { coreServices } from "@/data/services";
 import { useSeo } from "@/composables/useSeo";
 import { publicAsset } from "@/utils/publicAsset";
 

@@ -61,11 +61,21 @@ import { workFilters } from "@/data/works";
 import { useSiteStore } from "@/stores/site";
 import type { WorkCategory } from "@/types/work";
 
+function matchesWorkCategory(
+  itemCategory: string,
+  selected: WorkCategory
+): boolean {
+  if (selected === "all") return true;
+  if (itemCategory === selected) return true;
+  return (
+    selected === "repair" &&
+    (itemCategory === "body" || itemCategory === "accident")
+  );
+}
+
 const site = useSiteStore();
 const category = ref<WorkCategory>("all");
 const filtered = computed(() =>
-  category.value === "all"
-    ? site.works
-    : site.works.filter(item => item.category === category.value)
+  site.works.filter(item => matchesWorkCategory(item.category, category.value))
 );
 </script>

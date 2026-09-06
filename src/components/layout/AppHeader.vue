@@ -48,9 +48,9 @@
           :key="item.to"
           flat
           no-caps
+          class="app-header__link"
           :to="item.to"
           :label="item.label"
-          class="app-header__link"
         />
       </nav>
 
@@ -61,10 +61,10 @@
         class="gt-sm"
         flat
         round
-        :icon="telegram.icon"
-        :href="hrefFor(telegram)"
         target="_blank"
         rel="noopener noreferrer"
+        :icon="telegram.icon"
+        :href="hrefFor(telegram)"
         :aria-label="site.config.cta.telegram"
       />
       <q-btn
@@ -85,7 +85,7 @@
         aria-label="Позвонить"
       />
       <q-btn
-        class="gt-sm"
+        class="gt-sm app-header__phone"
         flat
         no-caps
         icon="mdi-phone"
@@ -95,7 +95,7 @@
       />
 
       <q-btn
-        class="gt-sm"
+        class="gt-md"
         unelevated
         no-caps
         color="secondary"
@@ -121,27 +121,3 @@ const { primaryDisplay, toTelHref, primaryRaw } = usePhone();
 const { telegram, viber, hrefFor } = useMessengers();
 const primaryHref = computed(() => toTelHref(primaryRaw.value));
 </script>
-
-<style lang="scss" scoped>
-.app-header {
-  background: #0785b4;
-  color: #fff;
-}
-
-.app-header__toolbar {
-  min-height: 64px;
-}
-
-.app-header__menu {
-  min-width: 44px;
-  min-height: 44px;
-}
-
-.app-header__link {
-  font-weight: 600;
-}
-
-.app-header :deep(.q-btn:not(.bg-secondary)) {
-  color: #fff;
-}
-</style>

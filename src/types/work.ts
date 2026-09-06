@@ -1,8 +1,11 @@
 export type WorkCategory =
   | "all"
-  | "body"
+  | "sto"
+  | "repair"
   | "painting"
   | "frame"
+  | "polishing"
+  | "body"
   | "accident"
   | "commercial";
 

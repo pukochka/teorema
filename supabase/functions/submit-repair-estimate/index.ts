@@ -7,6 +7,7 @@ import {
   isTooFast,
   optionalText,
   requirePhone,
+  requireService,
   requireText
 } from "../_shared/validation.ts";
 
@@ -26,7 +27,7 @@ Deno.serve(async (req: Request) => {
 
     const name = requireText(body.name, "Имя");
     const phone = requirePhone(body.phone);
-    const serviceType = requireText(body.serviceType, "Услуга");
+    const serviceType = requireService(body.serviceType);
     const photoPaths = Array.isArray(body.photoPaths) ? body.photoPaths : [];
     if (photoPaths.length < 1) {
       return jsonResponse(
@@ -81,8 +82,6 @@ Deno.serve(async (req: Request) => {
         fields: {
           Имя: name,
           Телефон: phone,
-          Автомобиль:
-            `${optionalText(body.brand)} ${optionalText(body.model)}`.trim(),
           Услуга: serviceType,
           Комментарий: optionalText(body.description)
         },

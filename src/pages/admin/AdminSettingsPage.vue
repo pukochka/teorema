@@ -9,72 +9,81 @@
       style="max-width: 720px"
       @submit.prevent="save"
     >
-      <div class="text-h6">Телефоны</div>
+      <div class="text-h6">Телефон</div>
       <div class="row q-col-gutter-md">
         <div class="col-12 col-sm-6">
           <q-input
+            outlined
+            label="Как показывать"
             v-model="phonePrimaryDisplay"
-            outlined
-            label="Основной, как показывать"
           />
         </div>
         <div class="col-12 col-sm-6">
           <q-input
+            outlined
+            label="Для звонка"
             v-model="phonePrimaryRaw"
-            outlined
-            label="Основной, для звонка"
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-input
-            v-model="phoneSecondaryDisplay"
-            outlined
-            label="Дополнительный, как показывать"
-          />
-        </div>
-        <div class="col-12 col-sm-6">
-          <q-input
-            v-model="phoneSecondaryRaw"
-            outlined
-            label="Дополнительный, для звонка"
           />
         </div>
       </div>
 
-      <q-input v-model="address" outlined label="Адрес" />
-      <q-input v-model="email" outlined label="Email" type="email" />
+      <q-input
+        outlined
+        label="Адрес"
+        v-model="address"
+      />
+      <q-input
+        outlined
+        type="email"
+        label="Email"
+        v-model="email"
+      />
       <div class="row q-col-gutter-md">
         <div class="col-12 col-sm-6">
-          <q-input v-model="hoursDisplay" outlined label="График" />
+          <q-input
+            outlined
+            label="График"
+            v-model="hoursDisplay"
+          />
         </div>
         <div class="col-12 col-sm-6">
-          <q-input v-model="hoursClosed" outlined label="Выходной" />
+          <q-input
+            outlined
+            label="Выходной"
+            v-model="hoursClosed"
+          />
         </div>
       </div>
 
       <div class="text-h6">Мессенджеры</div>
       <q-input
-        v-model="prefill"
         outlined
-        type="textarea"
         autogrow
+        type="textarea"
         label="Текст сообщения для записи"
+        v-model="prefill"
       />
-      <q-toggle v-model="telegramEnabled" label="Показывать Telegram" />
+      <q-toggle
+        label="Показывать Telegram"
+        v-model="telegramEnabled"
+      />
       <q-input
-        v-model="telegramHandle"
         outlined
         label="Telegram username"
         hint="Без @, например teorema_service"
         :disable="!telegramEnabled"
+        v-model="telegramHandle"
       />
-      <q-toggle v-model="viberEnabled" label="Показывать Viber" />
+      <q-toggle
+        label="Показывать Viber"
+        v-model="viberEnabled"
+      />
       <q-input
-        v-model="viberHandle"
         outlined
         label="Номер Viber"
-        hint="Например +375256669313"
+        hint="Например +375445189432"
         :disable="!viberEnabled"
+        v-model="viberHandle"
       />
 
       <div>
@@ -98,9 +107,7 @@ import {
   DEFAULT_MESSENGER_PREFILL,
   mergeMessengers,
   PHONE_PRIMARY_DISPLAY,
-  PHONE_PRIMARY_RAW,
-  PHONE_SECONDARY_DISPLAY,
-  PHONE_SECONDARY_RAW
+  PHONE_PRIMARY_RAW
 } from "@/config/site";
 import { useSeo } from "@/composables/useSeo";
 import { supabase } from "@/lib/supabase";
@@ -117,12 +124,6 @@ const phonePrimaryDisplay = ref(
   site.config.phones[0]?.display ?? PHONE_PRIMARY_DISPLAY
 );
 const phonePrimaryRaw = ref(site.config.phones[0]?.raw ?? PHONE_PRIMARY_RAW);
-const phoneSecondaryDisplay = ref(
-  site.config.phones[1]?.display ?? PHONE_SECONDARY_DISPLAY
-);
-const phoneSecondaryRaw = ref(
-  site.config.phones[1]?.raw ?? PHONE_SECONDARY_RAW
-);
 const address = ref(site.config.address);
 const email = ref(site.config.email);
 const hoursDisplay = ref(site.config.workingHours.display);
@@ -142,11 +143,6 @@ function buildPayload(): SiteSettingsRow {
       raw: phonePrimaryRaw.value.trim(),
       display: phonePrimaryDisplay.value.trim(),
       label: "Основной"
-    },
-    {
-      raw: phoneSecondaryRaw.value.trim(),
-      display: phoneSecondaryDisplay.value.trim(),
-      label: "Дополнительный"
     }
   ].filter(phone => phone.raw || phone.display);
 

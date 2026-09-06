@@ -8,11 +8,11 @@
           no-caps
           stack
           class="col"
-          :icon="telegram.icon"
-          label="Telegram"
-          :href="hrefFor(telegram)"
           target="_blank"
           rel="noopener noreferrer"
+          :icon="telegram.icon"
+          :label="telegram.name"
+          :href="hrefFor(telegram)"
           :aria-label="site.config.cta.telegram"
         />
         <q-btn
@@ -22,8 +22,8 @@
           stack
           class="col"
           :icon="viber.icon"
-          label="Viber"
           :href="hrefFor(viber)"
+          :label="viber.name"
           :aria-label="site.config.cta.viber"
         />
         <q-btn
@@ -84,23 +84,3 @@ const { primaryDisplay, primaryRaw, toTelHref } = usePhone();
 const { hasMessengers, telegram, viber, hrefFor } = useMessengers();
 const href = computed(() => toTelHref(primaryRaw.value));
 </script>
-
-<style lang="scss" scoped>
-.mobile-action-bar {
-  background: #102a36;
-  color: #fff;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.mobile-action-bar__toolbar {
-  min-height: 72px;
-}
-
-.mobile-action-bar :deep(.q-btn) {
-  min-height: 56px;
-}
-
-.mobile-action-bar :deep(.q-btn:not(.bg-secondary)) {
-  color: #fff;
-}
-</style>

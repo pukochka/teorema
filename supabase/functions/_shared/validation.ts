@@ -1,5 +1,21 @@
 const MIN_FILL_MS = 2500;
 
+export const ALLOWED_SERVICE_IDS = [
+  "auto-service",
+  "repair",
+  "frame-repair",
+  "painting",
+  "polishing"
+] as const;
+
+const ALLOWED_SERVICE_TITLES = [
+  "СТО",
+  "Ремонт любой сложности",
+  "Стапель",
+  "Покрасочная камера",
+  "Полировка"
+];
+
 export function isHoneypot(website?: string): boolean {
   return Boolean(website && website.trim());
 }
@@ -27,6 +43,18 @@ export function requirePhone(value: unknown): string {
     throw new Error("Введите корректный телефон");
   }
   return phone;
+}
+
+export function requireService(value: unknown): string {
+  const service = requireText(value, "Услуга");
+  const allowedIds = ALLOWED_SERVICE_IDS as readonly string[];
+  if (
+    allowedIds.includes(service) ||
+    ALLOWED_SERVICE_TITLES.includes(service)
+  ) {
+    return service;
+  }
+  throw new Error("Выберите услугу");
 }
 
 export function getClientIp(req: Request): string {

@@ -6,6 +6,7 @@ declare module "vue-router" {
     description?: string;
     requiresAuth?: boolean;
     robots?: string;
+    serviceId?: string;
   }
 }
 

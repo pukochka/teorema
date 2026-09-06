@@ -1,4 +1,17 @@
 import type { RouteRecordRaw } from "vue-router";
+import { coreServices } from "@/data/services";
+
+const serviceRoutes: RouteRecordRaw[] = coreServices.map(service => ({
+  path: service.route.replace(/^\//, ""),
+  name: service.id,
+  component: () => import("@/pages/ServicePage.vue"),
+  meta: {
+    serviceId: service.id,
+    title: service.seoTitle,
+    description: service.seoDescription,
+    requiresAuth: false
+  }
+}));
 
 const routes: RouteRecordRaw[] = [
   {
@@ -11,97 +24,25 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/pages/IndexPage.vue"),
         meta: {
           title:
-            "СТО Teorema Service — ремонт, кузовные работы и покраска автомобилей",
+            "СТО Teorema Service — ремонт, стапель, покраска и полировка",
           description:
-            "СТО Teorema Service: техническое обслуживание автомобилей, кузовной ремонт, покраска в покрасочной камере, стапельные работы и обслуживание коммерческого транспорта.",
+            "СТО Teorema Service в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка.",
           requiresAuth: false
         }
       },
-      {
-        path: "auto-service",
-        name: "auto-service",
-        component: () => import("@/pages/AutoServicePage.vue"),
-        meta: {
-          title: "Автосервис в Teorema Service — ТО, диагностика и ремонт",
-          description:
-            "Техническое обслуживание, диагностика, ходовая, тормоза, двигатель, электрика и шиномонтаж легковых автомобилей и коммерческого транспорта.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "body-repair",
-        name: "body-repair",
-        component: () => import("@/pages/BodyRepairPage.vue"),
-        meta: {
-          title: "Кузовной ремонт автомобилей — Teorema Service",
-          description:
-            "Кузовной ремонт после ДТП: дефектовка, стапель, рихтовка, сварка, замена элементов, подготовка и покраска.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "painting",
-        name: "painting",
-        component: () => import("@/pages/PaintingPage.vue"),
-        meta: {
-          title: "Покраска автомобилей в покрасочной камере — Teorema Service",
-          description:
-            "Профессиональная покраска автомобилей: подбор цвета, подготовка, локальная и полная окраска, полировка.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "frame-repair",
-        name: "frame-repair",
-        component: () => import("@/pages/FrameRepairPage.vue"),
-        meta: {
-          title: "Стапельные работы и восстановление геометрии кузова",
-          description:
-            "Стапельные работы в Teorema Service: измерение, фиксация, вытяжка и контроль геометрии кузова после ДТП.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "commercial-vehicles",
-        name: "commercial-vehicles",
-        component: () => import("@/pages/CommercialVehiclesPage.vue"),
-        meta: {
-          title: "Ремонт коммерческого транспорта — Teorema Service",
-          description:
-            "Обслуживание микроавтобусов, фургонов и небольших грузовиков: ТО, диагностика, кузовной ремонт и покраска.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "fleet",
-        name: "fleet",
-        component: () => import("@/pages/FleetPage.vue"),
-        meta: {
-          title: "Обслуживание корпоративных автопарков — Teorema Service",
-          description:
-            "Teorema Service работает с компаниями, которым необходимо регулярно обслуживать несколько автомобилей.",
-          requiresAuth: false
-        }
-      },
+      ...serviceRoutes,
+      { path: "body-repair", redirect: "/repair" },
+      { path: "commercial-vehicles", redirect: "/" },
+      { path: "fleet", redirect: "/" },
+      { path: "equipment", redirect: "/" },
       {
         path: "works",
         name: "works",
         component: () => import("@/pages/WorksPage.vue"),
         meta: {
-          title: "Наши работы — кузовной ремонт и покраска Teorema Service",
+          title: "Наши работы — Teorema Service",
           description:
-            "Примеры кузовного ремонта, покраски, стапельных работ и восстановления автомобилей после ДТП.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "equipment",
-        name: "equipment",
-        component: () => import("@/pages/EquipmentPage.vue"),
-        meta: {
-          title: "Оборудование автосервиса Teorema Service",
-          description:
-            "Покрасочная камера, стапель, подъёмники, диагностическое и шиномонтажное оборудование.",
+            "Примеры работ Teorema Service: СТО, ремонт, стапель, покраска и полировка.",
           requiresAuth: false
         }
       },
@@ -112,7 +53,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: "Цены на услуги автосервиса Teorema Service",
           description:
-            "Стоимость услуг Teorema Service определяется после диагностики. Для кузовного ремонта можно отправить фотографии.",
+            "Стоимость услуг Teorema Service определяется после осмотра. Для ремонта можно отправить фотографии.",
           requiresAuth: false
         }
       },
@@ -123,7 +64,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: "О сервисе Teorema Service",
           description:
-            "Teorema Service — комплексный автосервис: технический ремонт, кузовной цех, стапель и покраска в одном месте.",
+            "Teorema Service — СТО в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка.",
           requiresAuth: false
         }
       },
@@ -132,9 +73,9 @@ const routes: RouteRecordRaw[] = [
         name: "contacts",
         component: () => import("@/pages/ContactsPage.vue"),
         meta: {
-          title: "Контакты Teorema Service — адрес и телефоны",
+          title: "Контакты Teorema Service — адрес и телефон",
           description:
-            "Teorema Service, ул. Солтыса, 10В. Телефоны +375 25 666 93 13 и +375 44 518 94 32. График 9:00–18:00, воскресенье — выходной.",
+            "Teorema Service, г. Минск, ул. Солтыса, 108. Телефон +375 44 518 94 32. График 9:00–18:00, воскресенье — выходной.",
           requiresAuth: false
         }
       },
@@ -145,7 +86,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: "Записаться на сервис — Teorema Service",
           description:
-            "Онлайн-запись в Teorema Service: выберите услугу, удобную дату и время.",
+            "Онлайн-запись в Teorema Service: имя, телефон и нужная услуга.",
           requiresAuth: false
         }
       },
@@ -156,7 +97,7 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: "Оценка ремонта по фото — Teorema Service",
           description:
-            "Отправьте фотографии автомобиля — мы предварительно оценим объём кузовного ремонта, покраски или стапельных работ.",
+            "Отправьте фотографии автомобиля — предварительно оценим объём работ и свяжемся с вами.",
           requiresAuth: false
         }
       },

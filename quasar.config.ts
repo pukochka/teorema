@@ -1,7 +1,7 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { defineConfig } from "#q-app";
 
@@ -43,6 +43,12 @@ function rewritePublishedSeoFiles(distDir: string) {
 }
 
 export default defineConfig(ctx => {
+  const logoFrom = join(ctx.appPaths.appDir, "src/assets/logo.png");
+  const logoTo = join(ctx.appPaths.appDir, "public/logo.png");
+  if (existsSync(logoFrom)) {
+    copyFileSync(logoFrom, logoTo);
+  }
+
   return {
     boot: ["i18n", "supabase", "content", "seo"],
 
