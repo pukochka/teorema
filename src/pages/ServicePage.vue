@@ -16,6 +16,16 @@
         :title="page.h1"
         :subtitle="page.subtitle"
       />
+      <div class="page-media">
+        <MediaPlaceholder
+          variant="wide"
+          :src="page.image"
+          :alt="page.imageAlt || page.name"
+          :label="`Фото услуги: ${page.name}`"
+          :hint="serviceHint"
+          :ratio="16 / 9"
+        />
+      </div>
       <p
         v-if="page.intro"
         class="text-body1 q-mt-md q-mb-none"
@@ -79,6 +89,14 @@
             bordered
             class="surface-card full-height"
           >
+            <MediaPlaceholder
+              variant="card"
+              :src="item.image"
+              :alt="item.imageAlt || item.name"
+              :label="item.name"
+              :hint="shotHintForPage(item)"
+              :ratio="16 / 10"
+            />
             <q-card-section>
               <div class="text-h6">{{ item.name }}</div>
               <p class="muted">{{ item.cardDescription || item.intro }}</p>
@@ -122,9 +140,11 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import ContactCTA from "@/components/common/ContactCTA.vue";
+import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import FaqSection from "@/components/home/FaqSection.vue";
+import { shotHintForPage } from "@/data/services";
 import { faqJsonLd, serviceJsonLd, stringifyJsonLd } from "@/composables/useJsonLd";
 import { useSeo } from "@/composables/useSeo";
 import ErrorNotFound from "@/pages/ErrorNotFound.vue";
@@ -156,6 +176,9 @@ const related = computed(() =>
     .filter((item): item is ManagedPage =>
       Boolean(item && item.status === "published")
     )
+);
+const serviceHint = computed(() =>
+  page.value ? shotHintForPage(page.value) : ""
 );
 
 const serviceLd = computed(() => {

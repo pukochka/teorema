@@ -61,6 +61,24 @@ export function coreServiceLabel(
   return found?.title || idOrTitle;
 }
 
+export const serviceShotHints: Record<string, string> = {
+  maintenance: "Авто на подъёмнике в чистом боксе, без лиц клиентов",
+  repair: "Ремонтный пост: открытый капот или рабочий стол",
+  "body-repair": "Стапель с зафиксированным авто, свет сверху",
+  painting: "Покрасочная камера: кузов или деталь в процессе",
+  tires: "Шиномонтажный станок и колесо в кадре",
+  ac: "Заправка кондиционера: шланги и манометры",
+  polishing: "Полировка кузова крупным планом, чистый бокс"
+};
+
+export function shotHintForPage(page: ManagedPage): string {
+  const key = page.serviceId || page.id;
+  return (
+    serviceShotHints[key] ||
+    "Горизонтальный кадр рабочего места, без рекламы и лиц клиентов"
+  );
+}
+
 export function homeCardsFromPages(pages: ManagedPage[]): DirectionCard[] {
   return pages
     .filter(
@@ -75,7 +93,10 @@ export function homeCardsFromPages(pages: ManagedPage[]): DirectionCard[] {
       description: page.cardDescription || page.intro,
       icon: page.icon || "mdi-car-wrench",
       route: page.path,
-      cta: page.cta || "Подробнее"
+      cta: page.cta || "Подробнее",
+      image: page.image,
+      imageAlt: page.imageAlt || page.name,
+      shotHint: shotHintForPage(page)
     }));
 }
 

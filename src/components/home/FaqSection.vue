@@ -10,7 +10,7 @@
     />
     <q-list
       bordered
-      class="rounded-borders q-mt-lg"
+      class="faq-list rounded-borders q-mt-lg"
     >
       <q-expansion-item
         v-for="item in items"

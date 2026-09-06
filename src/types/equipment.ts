@@ -5,4 +5,5 @@ export interface EquipmentItem {
   icon: string;
   image: string;
   imageAlt: string;
+  shotHint: string;
 }

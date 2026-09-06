@@ -54,8 +54,8 @@ export const defaultManagedPages: ManagedPage[] = [
         "Позвоните, оставьте заявку на запись или отправьте фотографии через форму оценки. Стоимость зависит от автомобиля и объёма работ — её сообщим после осмотра или по фото."
       )
     ],
-    image: "",
-    imageAlt: "",
+    image: "/images/hero/workshop.jpg",
+    imageAlt: "Фасад сервиса или автомобиль в боксе Teorema Service",
     ogTitle: "",
     ogDescription: "",
     ogImage: "",
@@ -102,7 +102,7 @@ export const defaultManagedPages: ManagedPage[] = [
         "Стоимость зависит от автомобиля и перечня работ. Назовём её после осмотра или по заявке."
       )
     ],
-    image: "",
+    image: "/images/services/maintenance.jpg",
     imageAlt: "Техническое обслуживание в Teorema Service",
     ogTitle: "",
     ogDescription: "",
@@ -164,7 +164,7 @@ export const defaultManagedPages: ManagedPage[] = [
         "Предварительно — по фотографиям или описанию. Точную стоимость называем после осмотра."
       )
     ],
-    image: "",
+    image: "/images/services/repair.jpg",
     imageAlt: "Ремонт автомобиля в Teorema Service",
     ogTitle: "",
     ogDescription: "",
@@ -226,7 +226,7 @@ export const defaultManagedPages: ManagedPage[] = [
         "Да, покраска кузова и отдельных деталей выполняется в покрасочной камере."
       )
     ],
-    image: "",
+    image: "/images/services/body-repair.jpg",
     imageAlt: "Стапель для кузовного ремонта",
     ogTitle: "",
     ogDescription: "",
@@ -287,7 +287,7 @@ export const defaultManagedPages: ManagedPage[] = [
         "Да, красим и отдельные детали. Возможность и объём подготовки уточним по автомобилю."
       )
     ],
-    image: "",
+    image: "/images/services/painting.jpg",
     imageAlt: "Покрасочная камера Teorema Service",
     ogTitle: "",
     ogDescription: "",
@@ -347,7 +347,7 @@ export const defaultManagedPages: ManagedPage[] = [
         "Да. Монтаж, демонтаж и балансировка колёс выполняются на шиномонтажном оборудовании сервиса."
       )
     ],
-    image: "",
+    image: "/images/services/tires.jpg",
     imageAlt: "Шиномонтаж в Teorema Service",
     ogTitle: "",
     ogDescription: "",
@@ -402,7 +402,7 @@ export const defaultManagedPages: ManagedPage[] = [
         "Стоимость назовём при обращении: она зависит от автомобиля и фактического объёма работ."
       )
     ],
-    image: "",
+    image: "/images/services/ac.jpg",
     imageAlt: "Заправка автокондиционера",
     ogTitle: "",
     ogDescription: "",
@@ -463,7 +463,7 @@ export const defaultManagedPages: ManagedPage[] = [
         "Да, полировку можно совместить с другими работами в сервисе. Объём согласуем отдельно."
       )
     ],
-    image: "",
+    image: "/images/services/polishing.jpg",
     imageAlt: "Полировка кузова",
     ogTitle: "",
     ogDescription: "",
@@ -547,7 +547,7 @@ export const defaultManagedPages: ManagedPage[] = [
       "Teorema Service принимает легковые автомобили и лёгкий коммерческий транспорт, включая небольшие грузовики. В одном месте можно сделать обслуживание и ремонт, кузовные работы на стапеле, покраску в камере, шиномонтаж, заправку кондиционера и полировку кузова.",
     blocks: [],
     faq: [],
-    image: "",
+    image: "/images/about/workshop.jpg",
     imageAlt: "Автосервис Teorema Service",
     ogTitle: "",
     ogDescription: "",
@@ -571,8 +571,8 @@ export const defaultManagedPages: ManagedPage[] = [
     intro: "",
     blocks: [],
     faq: [],
-    image: "",
-    imageAlt: "",
+    image: "/images/contacts/facade.jpg",
+    imageAlt: "Фасад и въезд Teorema Service",
     ogTitle: "",
     ogDescription: "",
     ogImage: "",

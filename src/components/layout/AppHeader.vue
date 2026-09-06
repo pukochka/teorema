@@ -1,5 +1,8 @@
 <template>
-  <q-header class="app-header">
+  <q-header
+    class="app-header text-dark"
+    :elevated="false"
+  >
     <q-toolbar class="page-shell app-header__toolbar">
       <q-btn
         class="lt-md app-header__menu"

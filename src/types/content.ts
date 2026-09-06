@@ -256,7 +256,13 @@ export function mergePages(
 ): ManagedPage[] {
   const map = new Map(defaults.map(page => [page.id, page]));
   for (const page of incoming) {
-    map.set(page.id, page);
+    const current = map.get(page.id);
+    map.set(page.id, {
+      ...current,
+      ...page,
+      image: page.image || current?.image || "",
+      imageAlt: page.imageAlt || current?.imageAlt || ""
+    });
   }
   return [...map.values()];
 }

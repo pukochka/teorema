@@ -12,7 +12,10 @@
         "
       />
 
-      <q-list bordered class="rounded-borders q-mt-xl">
+      <q-list
+        bordered
+        class="faq-list rounded-borders q-mt-xl"
+      >
         <q-expansion-item
           v-for="category in priceCategories"
           :key="category.id"

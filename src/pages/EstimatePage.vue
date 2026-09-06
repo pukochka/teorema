@@ -18,7 +18,11 @@
         text="Напишите в Telegram или Viber и приложите снимки повреждения."
         :message="estimateMessage"
       />
-      <q-card class="q-mt-xl" flat bordered>
+      <q-card
+        flat
+        bordered
+        class="surface-card q-mt-xl"
+      >
         <q-card-section>
           <div v-if="hasMessengers" class="q-mb-lg">
             <div class="text-h6">Или заполните форму на сайте</div>

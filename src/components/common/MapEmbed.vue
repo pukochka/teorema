@@ -2,7 +2,7 @@
   <q-card
     flat
     bordered
-    class="map-embed"
+    class="map-embed surface-card"
   >
     <q-card-section class="q-pa-none">
       <iframe

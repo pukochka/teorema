@@ -1,16 +1,22 @@
 <template>
-  <section class="contact-cta brand-diagonal q-mt-xl">
+  <section class="contact-cta q-mt-xl">
     <BrandStripe variant="cta" />
-    <q-card class="contact-cta__card" flat>
+    <q-card
+      flat
+      class="contact-cta__card"
+    >
       <q-card-section class="q-pa-lg q-pa-md-xl">
         <div class="eyebrow contact-cta__eyebrow">Teorema Service</div>
         <h2 class="section-heading text-white q-mt-sm q-mb-md">
           {{ title }}
         </h2>
-        <p class="q-mb-lg" style="max-width: 40rem">
+        <p class="contact-cta__text q-mb-lg">
           {{ resolvedText }}
         </p>
-        <div v-if="hasMessengers" class="q-mb-md">
+        <div
+          v-if="hasMessengers"
+          class="q-mb-md"
+        >
           <MessengerButtons :message="message" />
         </div>
         <div class="cta-row">
@@ -23,7 +29,10 @@
             :label="estimateLabel"
             :to="estimateTo"
           />
-          <PhoneButton color="white" text-color="dark" />
+          <PhoneButton
+            color="white"
+            text-color="dark"
+          />
         </div>
       </q-card-section>
     </q-card>
@@ -60,15 +69,3 @@ const resolvedText = computed(() => {
     : "Отправьте фотографии автомобиля — мы предварительно оценим объём необходимых работ.";
 });
 </script>
-
-<style lang="scss" scoped>
-.contact-cta__card {
-  overflow: hidden;
-  color: #fff;
-  background: linear-gradient(125deg, #056b91 0%, #0785b4 58%, #102a36 100%);
-}
-
-.contact-cta__eyebrow {
-  color: #f5a83d;
-}
-</style>

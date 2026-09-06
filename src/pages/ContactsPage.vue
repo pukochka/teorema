@@ -90,6 +90,16 @@
           </q-card>
         </div>
         <div class="col-12 col-md-7">
+          <MediaPlaceholder
+            variant="wide"
+            class="q-mb-lg"
+            :src="page?.image"
+            :alt="page?.imageAlt || 'Фасад и въезд Teorema Service'"
+            label="Фасад и въезд"
+            hint="Горизонтальный кадр въезда или фасада, чтобы было видно, как подъехать."
+            :ratio="16 / 10"
+          />
+
           <MapEmbed />
         </div>
       </div>
@@ -99,6 +109,7 @@
 
 <script setup lang="ts">
 import MapEmbed from "@/components/common/MapEmbed.vue";
+import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import MessengerButtons from "@/components/common/MessengerButtons.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";

@@ -16,6 +16,14 @@
           bordered
           class="surface-card full-height"
         >
+          <MediaPlaceholder
+            variant="card"
+            :src="item.image"
+            :alt="item.imageAlt"
+            :label="item.title"
+            :hint="item.shotHint"
+            :ratio="16 / 10"
+          />
           <q-card-section>
             <div class="surface-icon q-mb-md">
               <q-icon
@@ -33,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import { equipmentItems } from "@/data/equipment";
 </script>

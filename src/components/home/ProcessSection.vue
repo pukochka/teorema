@@ -17,8 +17,8 @@
           class="surface-card full-height"
         >
           <q-card-section>
-            <div class="eyebrow">{{ step.id }}</div>
-            <h3 class="text-h6 q-mt-sm">{{ step.title }}</h3>
+            <div class="process-step__index">{{ step.id }}</div>
+            <h3 class="text-h6 q-mt-md">{{ step.title }}</h3>
             <p class="muted q-mb-none">{{ step.description }}</p>
           </q-card-section>
         </q-card>

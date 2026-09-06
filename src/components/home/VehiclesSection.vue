@@ -16,6 +16,14 @@
           bordered
           class="surface-card full-height"
         >
+          <MediaPlaceholder
+            variant="card"
+            :src="item.image"
+            :alt="item.imageAlt"
+            :label="item.shotLabel"
+            :hint="item.shotHint"
+            :ratio="16 / 10"
+          />
           <q-card-section>
             <div class="surface-icon">
               <q-icon
@@ -33,6 +41,7 @@
 </template>
 
 <script setup lang="ts">
+import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 
 const items = [
@@ -40,13 +49,21 @@ const items = [
     id: "cars",
     title: "Легковые автомобили",
     icon: "mdi-car",
-    text: "Плановое обслуживание, ремонт, кузовные работы, покраска и дополнительные услуги."
+    text: "Плановое обслуживание, ремонт, кузовные работы, покраска и дополнительные услуги.",
+    image: "/images/vehicles/cars.jpg",
+    imageAlt: "Легковой автомобиль в боксе Teorema Service",
+    shotLabel: "Легковой автомобиль в боксе",
+    shotHint: "Кадр 16:10: машина на посту, без крупных номеров и лиц"
   },
   {
     id: "lcv",
     title: "Лёгкий коммерческий транспорт",
     icon: "mdi-van-utility",
-    text: "Принимаем лёгкий коммерческий транспорт, включая небольшие грузовики. Возможность работ по конкретному автомобилю уточняйте при обращении."
+    text: "Принимаем лёгкий коммерческий транспорт, включая небольшие грузовики. Возможность работ по конкретному автомобилю уточняйте при обращении.",
+    image: "/images/vehicles/lcv.jpg",
+    imageAlt: "Лёгкий коммерческий транспорт в сервисе",
+    shotLabel: "Фургон или небольшой грузовик",
+    shotHint: "Кадр 16:10: LCV у ворот или в боксе, без рекламы на заднем плане"
   }
 ];
 </script>

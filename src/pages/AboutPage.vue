@@ -19,7 +19,7 @@
     <section class="page-section page-shell">
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-6">
-          <q-list>
+          <q-list class="surface-card">
             <q-item
               v-for="service in services"
               :key="service.id"
@@ -40,6 +40,16 @@
           </q-list>
         </div>
         <div class="col-12 col-md-6">
+          <MediaPlaceholder
+            variant="wide"
+            class="q-mb-lg"
+            :src="page?.image"
+            :alt="page?.imageAlt || 'Интерьер или территория Teorema Service'"
+            label="Интерьер бокса или территория сервиса"
+            hint="Горизонтальный кадр: рабочий бокс, двор или зона приёмки. Без лиц клиентов."
+            :ratio="16 / 10"
+          />
+
           <q-card
             flat
             bordered
@@ -65,6 +75,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import ContactCTA from "@/components/common/ContactCTA.vue";
+import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import { useSeo } from "@/composables/useSeo";

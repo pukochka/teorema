@@ -12,6 +12,14 @@
         class="col-12 col-sm-6"
       >
         <q-card class="surface-card surface-card--interactive full-height">
+          <MediaPlaceholder
+            variant="card"
+            :src="item.image"
+            :alt="item.imageAlt || item.title"
+            :label="`Фото: ${item.title}`"
+            :hint="item.shotHint"
+            :ratio="16 / 10"
+          />
           <q-card-section>
             <div class="surface-icon surface-icon--accent">
               <q-icon
@@ -40,6 +48,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import { useSiteStore } from "@/stores/site";
 

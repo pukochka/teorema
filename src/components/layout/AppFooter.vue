@@ -1,5 +1,5 @@
 <template>
-  <footer class="app-footer brand-diagonal">
+  <footer class="app-footer">
     <BrandStripe variant="footer" />
     <div class="page-shell q-py-xl">
       <div class="row q-col-gutter-lg">

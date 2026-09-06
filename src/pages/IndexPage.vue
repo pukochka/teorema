@@ -1,30 +1,57 @@
 <template>
   <q-page class="bg-white">
     <HomeHero />
-    <VehiclesSection />
-    <DirectionsSection />
-    <EquipmentSection />
-    <HomeWorks />
-    <ProcessSection />
-    <FaqSection :items="faqItems" />
-    <ReviewsSection />
-    <div class="page-shell q-pb-xl">
-      <ContactCTA
-        title="Нужна запись или расчёт по фото?"
-        text="Позвоните, оставьте заявку или отправьте фотографии автомобиля."
-        :estimate-label="site.cta.clarifyPrice"
-      />
+
+    <div class="page-band page-band--muted">
+      <VehiclesSection />
     </div>
-    <section class="page-section page-shell">
-      <SectionHeading
-        eyebrow="Контакты"
-        title="Как нас найти"
-        :subtitle="contactSubtitle"
-      />
-      <div class="q-mt-lg">
-        <MapEmbed />
+
+    <div class="page-band">
+      <DirectionsSection />
+    </div>
+
+    <div class="page-band page-band--muted">
+      <EquipmentSection />
+    </div>
+
+    <div class="page-band">
+      <HomeWorks />
+    </div>
+
+    <div class="page-band page-band--muted">
+      <ProcessSection />
+    </div>
+
+    <div class="page-band">
+      <FaqSection :items="faqItems" />
+    </div>
+
+    <div class="page-band page-band--muted">
+      <ReviewsSection />
+    </div>
+
+    <div class="page-band">
+      <div class="page-shell q-pb-xl">
+        <ContactCTA
+          title="Нужна запись или расчёт по фото?"
+          text="Позвоните, оставьте заявку или отправьте фотографии автомобиля."
+          :estimate-label="site.cta.clarifyPrice"
+        />
       </div>
-    </section>
+    </div>
+
+    <div class="page-band page-band--muted">
+      <section class="page-section page-shell">
+        <SectionHeading
+          eyebrow="Контакты"
+          title="Как нас найти"
+          :subtitle="contactSubtitle"
+        />
+        <div class="q-mt-lg">
+          <MapEmbed />
+        </div>
+      </section>
+    </div>
     <component
       :is="'script'"
       v-if="faqLd"

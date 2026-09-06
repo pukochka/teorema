@@ -33,6 +33,9 @@ export interface DirectionCard {
   icon: string;
   route: string;
   cta: string;
+  image?: string;
+  imageAlt?: string;
+  shotHint?: string;
 }
 
 export interface TrustItem {

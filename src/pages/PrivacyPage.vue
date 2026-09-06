@@ -1,6 +1,6 @@
 <template>
   <q-page class="bg-white">
-    <section class="page-section page-shell" style="max-width: 820px">
+    <section class="page-section page-shell page-shell--narrow">
       <PageCrumbs label="Обработка данных" />
       <SectionHeading
         heading-tag="h1"
