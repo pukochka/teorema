@@ -75,38 +75,54 @@ npm run lint
 SUPABASE_ENABLED=false
 SUPABASE_URL=
 SUPABASE_ANON_KEY=
-PUBLIC_SITE_URL=
-PUBLIC_PATH=
+PUBLIC_SITE_URL=https://teorema-service.site
+PUBLIC_PATH=/
 BUSINESS_LAT=
 BUSINESS_LNG=
 ```
 
 - `SUPABASE_ENABLED` — сейчас `false`: клиент Supabase не создаётся, контент и заявки идут без бэкенда. Чтобы включить обратно, поставьте `true` и заполните ключи.
 - `SUPABASE_URL` и `SUPABASE_ANON_KEY` — публичные ключи проекта Supabase.
-- `PUBLIC_SITE_URL` — канонический адрес сайта, например `https://example.com`. Нужен для SEO (canonical, Open Graph, sitemap).
-- `PUBLIC_PATH` — префикс URL, если сайт открывается не из корня домена. Для GitHub Pages репозитория `teorema` это `/teorema/`. Для своего домена оставьте пустым.
+- `PUBLIC_SITE_URL` — канонический адрес сайта. По умолчанию `https://teorema-service.site`.
+- `PUBLIC_PATH` — для своего домена оставляйте `/`.
 - `BUSINESS_LAT` и `BUSINESS_LNG` — координаты сервиса. Пока они пустые, на странице контактов показывается ссылка на поиск по адресу.
 
 Секреты Resend и `service_role` в frontend `.env` не класть. Они задаются только в Supabase Edge Functions.
 
 ## Публикация на GitHub Pages
 
-Каждый push в `master` или `main` собирает SSG и публикует сайт через GitHub Actions (`.github/workflows/deploy-ssg.yml`).
+Каждый push в `master` или `main` собирает SSG и публикует сайт на [https://teorema-service.site](https://teorema-service.site).
 
 1. В репозитории откройте **Settings → Pages**.
-2. В **Build and deployment → Source** выберите **GitHub Actions**.
-3. Добавьте секреты в **Settings → Secrets and variables → Actions**, если они нужны на проде:
+2. **Build and deployment → Source** — **GitHub Actions**.
+3. **Custom domain** — `teorema-service.site`, затем включите **Enforce HTTPS**.
+4. У регистратора домена создайте DNS-записи:
+
+Apex `teorema-service.site` (A):
 
 ```text
-BUSINESS_LAT
-BUSINESS_LNG
-PUBLIC_SITE_URL
-PUBLIC_PATH
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
 ```
 
-`PUBLIC_SITE_URL` и `PUBLIC_PATH` можно не задавать: workflow сам подставит адрес вида `https://<owner>.github.io/<repo>/`. Если будет свой домен, задайте `PUBLIC_SITE_URL` (без слэша в конце) и `PUBLIC_PATH` как `/`.
+AAAA (IPv6), если регистратор позволяет:
 
-Сайт репозитория: https://pukochka.github.io/teorema/
+```text
+2606:50c0:8000::153
+2606:50c0:8001::153
+2606:50c0:8002::153
+2606:50c0:8003::153
+```
+
+`www` (CNAME):
+
+```text
+www  CNAME  pukochka.github.io
+```
+
+Файл `public/CNAME` уже содержит `teorema-service.site` и попадает в корень SSG-сборки. После пуша GitHub сам подхватит домен. DNS может обновляться до 24 часов; сертификат HTTPS появляется после того, как GitHub увидит правильные A-записи.
 
 ## Контакты
 

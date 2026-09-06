@@ -13,6 +13,9 @@ export const PHONE_PRIMARY_DISPLAY = "+375 25 666 93 13";
 export const PHONE_SECONDARY_RAW = "+375445189432";
 export const PHONE_SECONDARY_DISPLAY = "+375 44 518 94 32";
 
+export const SITE_DOMAIN = "teorema-service.site";
+export const DEFAULT_SITE_URL = `https://${SITE_DOMAIN}`;
+
 export const DEFAULT_MESSENGER_PREFILL =
   "Здравствуйте! Хочу записаться в Teorema Service.";
 
@@ -73,7 +76,7 @@ export const seoDefaults: SeoDefaults = {
   title: "СТО Teorema Service — ремонт, кузовные работы и покраска автомобилей",
   description:
     "СТО Teorema Service: техническое обслуживание автомобилей, кузовной ремонт, покраска в покрасочной камере, стапельные работы и обслуживание коммерческого транспорта.",
-  siteUrl: envText("PUBLIC_SITE_URL"),
+  siteUrl: envText("PUBLIC_SITE_URL") || DEFAULT_SITE_URL,
   ogImage: "/images/og-cover.jpg",
   locale: "ru_BY",
   robots: "index, follow"

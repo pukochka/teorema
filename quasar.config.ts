@@ -13,16 +13,16 @@ function normalizePublicPath(value = ""): string {
 }
 
 function rewritePublishedSeoFiles(distDir: string) {
-  const siteUrl = (process.env.PUBLIC_SITE_URL || "").replace(/\/$/, "");
+  const siteUrl = (
+    process.env.PUBLIC_SITE_URL || "https://teorema-service.site"
+  ).replace(/\/$/, "");
   const publicPath = normalizePublicPath(process.env.PUBLIC_PATH);
   const adminPath =
     publicPath === "/" ? "/admin" : `${publicPath.replace(/\/$/, "")}/admin`;
 
   const robotsPath = join(distDir, "robots.txt");
   if (existsSync(robotsPath)) {
-    const sitemapLine = siteUrl
-      ? `Sitemap: ${siteUrl}/sitemap.xml`
-      : "Sitemap: /sitemap.xml";
+    const sitemapLine = `Sitemap: ${siteUrl}/sitemap.xml`;
     writeFileSync(
       robotsPath,
       `User-agent: *\nAllow: /\nDisallow: ${adminPath}\n\n${sitemapLine}\n`
@@ -30,7 +30,7 @@ function rewritePublishedSeoFiles(distDir: string) {
   }
 
   const sitemapPath = join(distDir, "sitemap.xml");
-  if (siteUrl && existsSync(sitemapPath)) {
+  if (existsSync(sitemapPath)) {
     const sitemap = readFileSync(sitemapPath, "utf8").replaceAll(
       "<loc>/",
       `<loc>${siteUrl}/`
@@ -39,6 +39,7 @@ function rewritePublishedSeoFiles(distDir: string) {
   }
 
   writeFileSync(join(distDir, ".nojekyll"), "");
+  writeFileSync(join(distDir, "CNAME"), "teorema-service.site\n");
 }
 
 export default defineConfig(ctx => {
@@ -68,7 +69,8 @@ export default defineConfig(ctx => {
         SUPABASE_ENABLED: process.env.SUPABASE_ENABLED || "false",
         SUPABASE_URL: process.env.SUPABASE_URL || "",
         SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || "",
-        PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL || "",
+        PUBLIC_SITE_URL:
+          process.env.PUBLIC_SITE_URL || "https://teorema-service.site",
         BUSINESS_LAT: process.env.BUSINESS_LAT || "",
         BUSINESS_LNG: process.env.BUSINESS_LNG || ""
       },
