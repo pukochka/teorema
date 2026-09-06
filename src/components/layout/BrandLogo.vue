@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import logoUrl from "@/assets/logo.png";
+import logoUrl from "@/assets/logo-black.png";
 </script>
 
 <style lang="scss" scoped>
