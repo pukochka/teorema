@@ -2,7 +2,7 @@
   "name": "teorema-service",
   "version": "0.0.1",
   "private": true,
-  "description": "СТО Teorema Service в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка.",
+  "description": "Teorema Service в Минске: обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта.",
   "keywords": [
     "quasar",
     "quasar-app",

@@ -1,17 +1,59 @@
 import type { RouteRecordRaw } from "vue-router";
-import { coreServices } from "@/data/services";
+import { defaultManagedPages } from "@/data/pages";
+import { defaultRedirects } from "@/data/redirects";
 
-const serviceRoutes: RouteRecordRaw[] = coreServices.map(service => ({
-  path: service.route.replace(/^\//, ""),
-  name: service.id,
+const publishedServices = defaultManagedPages.filter(
+  page => page.type === "service" && page.status === "published"
+);
+
+const serviceRoutes: RouteRecordRaw[] = publishedServices.map(page => ({
+  path: page.path.replace(/^\//, ""),
+  name: `service-${page.id}`,
   component: () => import("@/pages/ServicePage.vue"),
   meta: {
-    serviceId: service.id,
-    title: service.seoTitle,
-    description: service.seoDescription,
+    pageId: page.id,
+    title: page.seoTitle,
+    description: page.seoDescription,
     requiresAuth: false
   }
 }));
+
+const legacyRedirects: RouteRecordRaw[] = defaultRedirects.map(rule => ({
+  path: rule.fromPath.replace(/^\//, ""),
+  name: `redirect-${rule.id}`,
+  component: () => import("@/pages/RedirectPage.vue"),
+  meta: {
+    redirectTo: rule.toPath,
+    robots: "noindex, follow",
+    requiresAuth: false
+  }
+}));
+
+const staticPage = (
+  path: string,
+  name: string,
+  component: () => Promise<unknown>,
+  title: string,
+  description: string
+): RouteRecordRaw => ({
+  path,
+  name,
+  component,
+  meta: {
+    title,
+    description,
+    requiresAuth: false
+  }
+});
+
+const home = defaultManagedPages.find(page => page.id === "home");
+const works = defaultManagedPages.find(page => page.id === "works");
+const prices = defaultManagedPages.find(page => page.id === "prices");
+const about = defaultManagedPages.find(page => page.id === "about");
+const contacts = defaultManagedPages.find(page => page.id === "contacts");
+const booking = defaultManagedPages.find(page => page.id === "booking");
+const estimate = defaultManagedPages.find(page => page.id === "estimate");
+const privacy = defaultManagedPages.find(page => page.id === "privacy");
 
 const routes: RouteRecordRaw[] = [
   {
@@ -23,95 +65,70 @@ const routes: RouteRecordRaw[] = [
         name: "home",
         component: () => import("@/pages/IndexPage.vue"),
         meta: {
-          title:
-            "СТО Teorema Service — ремонт, стапель, покраска и полировка",
-          description:
-            "СТО Teorema Service в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка.",
+          title: home?.seoTitle,
+          description: home?.seoDescription,
           requiresAuth: false
         }
       },
       ...serviceRoutes,
-      { path: "body-repair", redirect: "/repair" },
-      { path: "commercial-vehicles", redirect: "/" },
-      { path: "fleet", redirect: "/" },
-      { path: "equipment", redirect: "/" },
       {
-        path: "works",
-        name: "works",
-        component: () => import("@/pages/WorksPage.vue"),
+        path: "uslugi/:slug",
+        name: "service",
+        component: () => import("@/pages/ServicePage.vue"),
         meta: {
-          title: "Наши работы — Teorema Service",
-          description:
-            "Примеры работ Teorema Service: СТО, ремонт, стапель, покраска и полировка.",
           requiresAuth: false
         }
       },
-      {
-        path: "prices",
-        name: "prices",
-        component: () => import("@/pages/PricesPage.vue"),
-        meta: {
-          title: "Цены на услуги автосервиса Teorema Service",
-          description:
-            "Стоимость услуг Teorema Service определяется после осмотра. Для ремонта можно отправить фотографии.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "about",
-        name: "about",
-        component: () => import("@/pages/AboutPage.vue"),
-        meta: {
-          title: "О сервисе Teorema Service",
-          description:
-            "Teorema Service — СТО в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "contacts",
-        name: "contacts",
-        component: () => import("@/pages/ContactsPage.vue"),
-        meta: {
-          title: "Контакты Teorema Service — адрес и телефон",
-          description:
-            "Teorema Service, г. Минск, ул. Солтыса, 108. Телефон +375 44 518 94 32. График 9:00–18:00, воскресенье — выходной.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "booking",
-        name: "booking",
-        component: () => import("@/pages/BookingPage.vue"),
-        meta: {
-          title: "Записаться на сервис — Teorema Service",
-          description:
-            "Онлайн-запись в Teorema Service: имя, телефон и нужная услуга.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "estimate",
-        name: "estimate",
-        component: () => import("@/pages/EstimatePage.vue"),
-        meta: {
-          title: "Оценка ремонта по фото — Teorema Service",
-          description:
-            "Отправьте фотографии автомобиля — предварительно оценим объём работ и свяжемся с вами.",
-          requiresAuth: false
-        }
-      },
-      {
-        path: "privacy",
-        name: "privacy",
-        component: () => import("@/pages/PrivacyPage.vue"),
-        meta: {
-          title: "Обработка данных — Teorema Service",
-          description:
-            "Данные из форм Teorema Service используются для обработки обращения и связи с клиентом.",
-          requiresAuth: false
-        }
-      }
+      ...legacyRedirects,
+      staticPage(
+        "works",
+        "works",
+        () => import("@/pages/WorksPage.vue"),
+        works?.seoTitle || "Наши работы — Teorema Service",
+        works?.seoDescription || ""
+      ),
+      staticPage(
+        "prices",
+        "prices",
+        () => import("@/pages/PricesPage.vue"),
+        prices?.seoTitle || "Цены на услуги автосервиса Teorema Service",
+        prices?.seoDescription || ""
+      ),
+      staticPage(
+        "about",
+        "about",
+        () => import("@/pages/AboutPage.vue"),
+        about?.seoTitle || "О сервисе Teorema Service в Минске",
+        about?.seoDescription || ""
+      ),
+      staticPage(
+        "contacts",
+        "contacts",
+        () => import("@/pages/ContactsPage.vue"),
+        contacts?.seoTitle || "Контакты Teorema Service",
+        contacts?.seoDescription || ""
+      ),
+      staticPage(
+        "booking",
+        "booking",
+        () => import("@/pages/BookingPage.vue"),
+        booking?.seoTitle || "Записаться в сервис — Teorema Service",
+        booking?.seoDescription || ""
+      ),
+      staticPage(
+        "estimate",
+        "estimate",
+        () => import("@/pages/EstimatePage.vue"),
+        estimate?.seoTitle || "Уточнить стоимость — Teorema Service",
+        estimate?.seoDescription || ""
+      ),
+      staticPage(
+        "privacy",
+        "privacy",
+        () => import("@/pages/PrivacyPage.vue"),
+        privacy?.seoTitle || "Обработка данных — Teorema Service",
+        privacy?.seoDescription || ""
+      )
     ]
   },
   {
@@ -142,11 +159,39 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: "pages",
+        name: "admin-pages",
+        component: () => import("@/pages/admin/AdminPagesPage.vue"),
+        meta: {
+          title: "Страницы и SEO — админка Teorema Service",
+          robots: "noindex, nofollow"
+        }
+      },
+      {
+        path: "pages/:id",
+        name: "admin-page-edit",
+        component: () => import("@/pages/admin/AdminPageEditorPage.vue"),
+        meta: {
+          title: "Редактирование страницы — админка Teorema Service",
+          robots: "noindex, nofollow"
+        }
+      },
+      {
+        path: "preview/:id",
+        name: "admin-preview",
+        component: () => import("@/pages/admin/AdminPreviewPage.vue"),
+        meta: {
+          title: "Предпросмотр — админка Teorema Service",
+          robots: "noindex, nofollow",
+          preview: true
+        }
+      },
+      {
         path: "settings",
         name: "admin-settings",
         component: () => import("@/pages/admin/AdminSettingsPage.vue"),
         meta: {
-          title: "Контакты — админка Teorema Service",
+          title: "Настройки сайта — админка Teorema Service",
           robots: "noindex, nofollow"
         }
       },

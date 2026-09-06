@@ -31,15 +31,23 @@
 import { computed, onMounted, ref } from "vue";
 import { useSeo } from "@/composables/useSeo";
 import { supabase } from "@/lib/supabase";
+import { useSiteStore } from "@/stores/site";
 
 useSeo();
 
+const pageCount = ref(0);
 const bookingCount = ref(0);
 const estimateCount = ref(0);
 const fleetCount = ref(0);
 const reviewCount = ref(0);
 
 const cards = computed(() => [
+  {
+    label: "Страницы и SEO",
+    value: pageCount.value,
+    to: "/admin/pages",
+    action: "Редактировать"
+  },
   {
     label: "Записи",
     value: bookingCount.value,
@@ -67,8 +75,9 @@ const cards = computed(() => [
 ]);
 
 onMounted(async () => {
+  pageCount.value = useSiteStore().pages.length;
   if (!supabase) return;
-  const [bookings, estimates, fleet, reviews] = await Promise.all([
+  const [bookings, estimates, fleet, reviews, pages] = await Promise.all([
     supabase.from("bookings").select("id", { count: "exact", head: true }),
     supabase
       .from("repair_estimates")
@@ -76,8 +85,10 @@ onMounted(async () => {
     supabase
       .from("fleet_requests")
       .select("id", { count: "exact", head: true }),
-    supabase.from("reviews").select("id", { count: "exact", head: true })
+    supabase.from("reviews").select("id", { count: "exact", head: true }),
+    supabase.from("pages").select("id", { count: "exact", head: true })
   ]);
+  if (pages.count != null) pageCount.value = pages.count;
   bookingCount.value = bookings.count ?? 0;
   estimateCount.value = estimates.count ?? 0;
   fleetCount.value = fleet.count ?? 0;

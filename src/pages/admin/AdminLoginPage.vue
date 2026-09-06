@@ -6,8 +6,8 @@
           <q-card-section>
             <div class="text-h5">Вход в админку</div>
             <p class="muted q-mb-none">
-              Учётную запись создайте в Supabase Auth. Регистрация с сайта
-              отключена.
+              Учётную запись создайте в Supabase Auth и добавьте user_id в
+              таблицу site_admins. Регистрация с сайта отключена.
             </p>
           </q-card-section>
           <q-card-section>

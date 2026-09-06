@@ -32,7 +32,9 @@ jobs:
 
       - name: Build SSG
         env:
-          SUPABASE_ENABLED: "false"
+          SUPABASE_ENABLED: ${{ secrets.SUPABASE_URL != '' && 'true' || 'false' }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           PUBLIC_SITE_URL: https://teorema-service.site
           PUBLIC_PATH: /
           BUSINESS_LAT: ${{ secrets.BUSINESS_LAT }}

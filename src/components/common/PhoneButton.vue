@@ -10,11 +10,13 @@
     :icon="showIcon ? 'mdi-phone' : undefined"
     :label="label || phoneDisplay"
     :aria-label="`Позвонить ${phoneDisplay}`"
+    @click="onClick"
   />
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { toTelHref, usePhone } from "@/composables/usePhone";
 
 const props = withDefaults(
@@ -42,4 +44,9 @@ const phoneDisplay = computed(
   () => props.display || phone.primaryDisplay.value
 );
 const href = computed(() => toTelHref(phoneRaw.value));
+const { trackEvent } = useAnalytics();
+
+function onClick() {
+  trackEvent("phone_click", { place: "button" });
+}
 </script>

@@ -2,21 +2,20 @@ import type { WorkFilter, WorkProject } from "@/types/work";
 
 export const workFilters: WorkFilter[] = [
   { category: "all", label: "Все" },
-  { category: "sto", label: "СТО" },
-  { category: "repair", label: "Ремонт любой сложности" },
-  { category: "frame", label: "Стапель" },
-  { category: "painting", label: "Покрасочная камера" },
+  { category: "repair", label: "Ремонт" },
+  { category: "frame", label: "Кузовной ремонт" },
+  { category: "painting", label: "Покраска" },
   { category: "polishing", label: "Полировка" }
 ];
 
 export const workCategoryLabels: Record<string, string> = {
-  sto: "СТО",
-  repair: "Ремонт любой сложности",
-  frame: "Стапель",
-  painting: "Покрасочная камера",
+  sto: "Обслуживание",
+  repair: "Ремонт",
+  frame: "Кузовной ремонт",
+  painting: "Покраска",
   polishing: "Полировка",
-  body: "Ремонт любой сложности",
-  accident: "Ремонт любой сложности",
+  body: "Кузовной ремонт",
+  accident: "Кузовной ремонт",
   commercial: "Коммерческий транспорт"
 };
 

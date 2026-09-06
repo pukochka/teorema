@@ -24,7 +24,8 @@
         label="Открыть в Яндекс.Картах"
         target="_blank"
         rel="noopener noreferrer"
-        :href="searchUrl"
+        :href="mapsHref"
+        @click="onRouteClick"
       />
     </q-card-actions>
   </q-card>
@@ -32,6 +33,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { useSiteStore } from "@/stores/site";
 
 const location = computed(() => useSiteStore().config.businessLocation);
@@ -52,4 +54,12 @@ const searchUrl = computed(
   () =>
     `https://yandex.ru/maps/?text=${encodeURIComponent(location.value.address)}`
 );
+const mapsHref = computed(
+  () => location.value.mapsUrl || searchUrl.value
+);
+const { trackEvent } = useAnalytics();
+
+function onRouteClick() {
+  trackEvent("route_click");
+}
 </script>

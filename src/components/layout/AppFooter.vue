@@ -57,6 +57,7 @@
               tag="a"
               class="q-px-none"
               :href="toTelHref(phone.raw)"
+              @click="onPhoneClick"
             >
               <q-item-section avatar>
                 <q-icon name="mdi-phone" />
@@ -78,6 +79,7 @@
               rel="noopener noreferrer"
               :href="hrefFor(messenger)"
               :target="messenger.id === 'telegram' ? '_blank' : undefined"
+              @click="onMessengerClick(messenger.id)"
             >
               <q-item-section avatar>
                 <q-icon :name="messenger.icon" />
@@ -105,14 +107,27 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { footerClients, footerServices } from "@/data/navigation";
+import { storeToRefs } from "pinia";
+import { footerClients } from "@/data/navigation";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { useMessengers } from "@/composables/useMessengers";
 import { toTelHref } from "@/composables/usePhone";
 import { useSiteStore } from "@/stores/site";
 import BrandLogo from "./BrandLogo.vue";
 import BrandStripe from "../common/BrandStripe.vue";
 
-const site = useSiteStore().config;
+const store = useSiteStore();
+const site = store.config;
+const { serviceNav: footerServices } = storeToRefs(store);
 const { messengers, hrefFor } = useMessengers();
+const { trackEvent } = useAnalytics();
 const year = computed(() => new Date().getFullYear());
+
+function onPhoneClick() {
+  trackEvent("phone_click", { place: "footer" });
+}
+
+function onMessengerClick(id: string) {
+  trackEvent("messenger_click", { network: id });
+}
 </script>

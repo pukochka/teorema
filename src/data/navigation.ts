@@ -23,6 +23,7 @@ export const footerClients: NavItem[] = [
   { label: "Оценка по фото", to: "/estimate" },
   { label: "Наши работы", to: "/works" },
   { label: "Цены", to: "/prices" },
+  { label: "О сервисе", to: "/about" },
   { label: "Контакты", to: "/contacts" }
 ];
 

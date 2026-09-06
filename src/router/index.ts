@@ -5,6 +5,9 @@ import {
   createWebHistory
 } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import { useSiteStore } from "@/stores/site";
+import { normalizePath } from "@/utils/paths";
+import { resolveRedirectTarget } from "@/utils/redirects";
 import { isClient } from "@/utils/ssr";
 import routes from "./routes";
 
@@ -29,6 +32,18 @@ export default defineRouter(() => {
 
     if (to.name === "admin-login" && auth.isAuthenticated) {
       return { path: "/admin" };
+    }
+
+    if (
+      isClient &&
+      !String(to.name || "").startsWith("redirect-") &&
+      !to.meta.redirectTo
+    ) {
+      const site = useSiteStore();
+      const target = resolveRedirectTarget(to.path, site.redirects);
+      if (target && target !== normalizePath(to.path)) {
+        return target;
+      }
     }
 
     if (!needsAuth) {

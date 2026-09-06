@@ -23,8 +23,11 @@ export interface MessengerLink {
 
 export interface BusinessLocation {
   address: string;
+  street: string;
+  city: string;
   lat: number | null;
   lng: number | null;
+  mapsUrl: string;
 }
 
 export interface WorkingHours {
@@ -40,12 +43,16 @@ export interface SeoDefaults {
   ogImage: string;
   locale: string;
   robots: string;
+  titleTemplate: string;
+  titleTemplateNoCity: string;
 }
 
 export interface SiteCta {
   call: string;
   book: string;
   bookShort: string;
+  clarifyPrice: string;
+  clarifyPriceShort: string;
   estimate: string;
   estimateShort: string;
   sendPhotos: string;

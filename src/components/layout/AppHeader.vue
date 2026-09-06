@@ -66,6 +66,7 @@
         :icon="telegram.icon"
         :href="hrefFor(telegram)"
         :aria-label="site.config.cta.telegram"
+        @click="onMessengerClick('telegram')"
       />
       <q-btn
         v-if="viber"
@@ -75,6 +76,7 @@
         :icon="viber.icon"
         :href="hrefFor(viber)"
         :aria-label="site.config.cta.viber"
+        @click="onMessengerClick('viber')"
       />
 
       <q-btn
@@ -83,6 +85,7 @@
         icon="mdi-phone"
         :href="primaryHref"
         aria-label="Позвонить"
+        @click="onPhoneClick"
       />
       <q-btn
         class="gt-sm app-header__phone"
@@ -92,6 +95,7 @@
         :href="primaryHref"
         :label="primaryDisplay"
         aria-label="Позвонить"
+        @click="onPhoneClick"
       />
 
       <q-btn
@@ -110,14 +114,26 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { headerNav, headerServices } from "@/data/navigation";
+import { storeToRefs } from "pinia";
+import { headerNav } from "@/data/navigation";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { useMessengers } from "@/composables/useMessengers";
 import { usePhone } from "@/composables/usePhone";
 import { useSiteStore } from "@/stores/site";
 import BrandLogo from "./BrandLogo.vue";
 
 const site = useSiteStore();
+const { serviceNav: headerServices } = storeToRefs(site);
 const { primaryDisplay, toTelHref, primaryRaw } = usePhone();
 const { telegram, viber, hrefFor } = useMessengers();
+const { trackEvent } = useAnalytics();
 const primaryHref = computed(() => toTelHref(primaryRaw.value));
+
+function onPhoneClick() {
+  trackEvent("phone_click", { place: "header" });
+}
+
+function onMessengerClick(id: string) {
+  trackEvent("messenger_click", { network: id });
+}
 </script>

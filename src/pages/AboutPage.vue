@@ -1,40 +1,30 @@
 <template>
   <q-page class="bg-white">
     <section class="page-section page-shell">
-      <PageCrumbs label="О нас" />
+      <PageCrumbs label="О сервисе" />
       <SectionHeading
         heading-tag="h1"
         eyebrow="О сервисе"
-        title="Teorema Service"
-        subtitle="Автосервис в Минске: СТО, ремонт любой сложности, стапель, покрасочная камера и полировка."
+        :title="page?.h1 || 'О сервисе'"
+        :subtitle="page?.subtitle || site.tagline"
       />
+      <p
+        v-if="page?.intro"
+        class="text-body1 q-mt-lg q-mb-none"
+      >
+        {{ page.intro }}
+      </p>
     </section>
 
     <section class="page-section page-shell">
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-6">
-          <q-img
-            :src="publicAsset('/images/workshop/overview.jpg')"
-            alt="Мастерская Teorema Service"
-            ratio="4/3"
-          >
-            <template #error>
-              <MediaPlaceholder
-                label="Фото мастерской появится здесь"
-                icon="mdi-storefront"
-                min-height="280px"
-              />
-            </template>
-          </q-img>
-          <div class="q-mt-md gt-xs">
-            <VideoSlot label="Видео мастерской появится здесь" />
-          </div>
-        </div>
-        <div class="col-12 col-md-6">
           <q-list>
             <q-item
+              v-for="service in services"
               :key="service.id"
-              v-for="service in coreServices"
+              clickable
+              :to="service.route"
             >
               <q-item-section avatar>
                 <q-icon
@@ -48,40 +38,42 @@
               </q-item-section>
             </q-item>
           </q-list>
-          <div class="q-mt-md">
-            <q-img
-              :src="publicAsset('/images/team/team.jpg')"
-              alt="Команда Teorema Service"
-              ratio="16/9"
-            >
-              <template #error>
-                <MediaPlaceholder
-                  label="Фото команды появится здесь"
-                  icon="mdi-account-group"
-                  min-height="180px"
-                />
-              </template>
-            </q-img>
-          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <q-card
+            flat
+            bordered
+            class="surface-card"
+          >
+            <q-card-section>
+              <div class="text-h6">{{ site.address }}</div>
+              <p class="muted q-mb-none">
+                {{ site.workingHours.display }}. {{ site.workingHours.closed }}
+              </p>
+            </q-card-section>
+          </q-card>
         </div>
       </div>
     </section>
 
     <div class="page-shell q-pb-xl">
-      <ContactCTA />
+      <ContactCTA :estimate-label="site.cta.clarifyPrice" />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import ContactCTA from "@/components/common/ContactCTA.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
-import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
-import VideoSlot from "@/components/common/VideoSlot.vue";
-import { coreServices } from "@/data/services";
 import { useSeo } from "@/composables/useSeo";
-import { publicAsset } from "@/utils/publicAsset";
+import { useSiteStore } from "@/stores/site";
+
+const store = useSiteStore();
+const site = store.config;
+const page = computed(() => store.pageByPath("/about"));
+const services = computed(() => store.publishedServices);
 
 useSeo();
 </script>

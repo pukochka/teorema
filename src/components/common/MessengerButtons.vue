@@ -20,6 +20,7 @@
         :target="item.id === 'telegram' ? '_blank' : undefined"
         rel="noopener noreferrer"
         :aria-label="item.label"
+        @click="onClick(item.id)"
       />
     </div>
   </div>
@@ -27,6 +28,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { messengerHref, useMessengers } from "@/composables/useMessengers";
 import { useSiteStore } from "@/stores/site";
 import type { MessengerId } from "@/types/contact";
@@ -51,6 +53,11 @@ const props = withDefaults(
 
 const site = useSiteStore();
 const { messengers } = useMessengers();
+const { trackEvent } = useAnalytics();
+
+function onClick(id: MessengerId) {
+  trackEvent("messenger_click", { network: id });
+}
 
 const items = computed(() =>
   messengers.value.map(item => ({

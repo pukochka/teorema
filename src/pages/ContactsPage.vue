@@ -5,8 +5,8 @@
       <SectionHeading
         heading-tag="h1"
         eyebrow="Контакты"
-        title="Teorema Service"
-        subtitle="Адрес, телефон и график работы."
+        :title="page?.h1 || 'Контакты'"
+        :subtitle="page?.subtitle || 'Адрес, телефон и график работы.'"
       />
 
       <div class="row q-col-gutter-lg q-mt-lg">
@@ -33,6 +33,7 @@
                 clickable
                 tag="a"
                 :href="toTelHref(phone.raw)"
+                @click="onPhoneClick"
               >
                 <q-item-section avatar>
                   <q-icon name="mdi-phone" color="primary" />
@@ -58,6 +59,7 @@
                 :href="hrefFor(messenger)"
                 :target="messenger.id === 'telegram' ? '_blank' : undefined"
                 rel="noopener noreferrer"
+                @click="onMessengerClick(messenger.id)"
               >
                 <q-item-section avatar>
                   <q-icon :name="messenger.icon" color="primary" />
@@ -102,10 +104,24 @@ import MessengerButtons from "@/components/common/MessengerButtons.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import { useMessengers } from "@/composables/useMessengers";
 import { toTelHref } from "@/composables/usePhone";
+import { computed } from "vue";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { useSeo } from "@/composables/useSeo";
 import { useSiteStore } from "@/stores/site";
 
-const site = useSiteStore().config;
+const store = useSiteStore();
+const site = store.config;
+const page = computed(() => store.pageByPath("/contacts"));
 const { messengers, hasMessengers, hrefFor } = useMessengers();
+const { trackEvent } = useAnalytics();
+
+function onPhoneClick() {
+  trackEvent("phone_click", { place: "contacts" });
+}
+
+function onMessengerClick(id: string) {
+  trackEvent("messenger_click", { network: id });
+}
+
 useSeo();
 </script>

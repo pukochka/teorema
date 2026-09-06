@@ -38,7 +38,7 @@
         clickable
         tag="a"
         :href="toTelHref(primaryRaw)"
-        @click="site.setDrawer(false)"
+        @click="onPhoneClick(); site.setDrawer(false)"
       >
         <q-item-section avatar>
           <q-icon
@@ -106,7 +106,9 @@
 </template>
 
 <script setup lang="ts">
-import { drawerNav } from "@/data/navigation";
+import { computed } from "vue";
+import { headerNav } from "@/data/navigation";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { usePhone } from "@/composables/usePhone";
 import { useSiteStore } from "@/stores/site";
 import MessengerButtons from "@/components/common/MessengerButtons.vue";
@@ -114,5 +116,15 @@ import BrandLogo from "./BrandLogo.vue";
 
 const site = useSiteStore();
 const { primaryDisplay, primaryRaw, toTelHref } = usePhone();
-const menu = drawerNav;
+const { trackEvent } = useAnalytics();
+const menu = computed(() => [
+  { label: "Главная", to: "/", icon: "mdi-home" },
+  ...site.serviceNav,
+  ...headerNav,
+  { label: "О нас", to: "/about", icon: "mdi-information" }
+]);
+
+function onPhoneClick() {
+  trackEvent("phone_click", { place: "drawer" });
+}
 </script>

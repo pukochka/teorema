@@ -1,9 +1,13 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
-import { copyFileSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { defineConfig } from "#q-app";
+import {
+  CONTENT_UPDATED_AT,
+  DEFAULT_SITEMAP_PATHS
+} from "./src/seo/manifest";
 
 function normalizePublicPath(value = ""): string {
   const trimmed = value.trim();
@@ -12,7 +16,50 @@ function normalizePublicPath(value = ""): string {
   return withLeading.endsWith("/") ? withLeading : `${withLeading}/`;
 }
 
-function rewritePublishedSeoFiles(distDir: string) {
+function distHasPage(distDir: string, path: string): boolean {
+  if (path === "/") return existsSync(join(distDir, "index.html"));
+  const relative = path.replace(/^\//, "");
+  return (
+    existsSync(join(distDir, relative, "index.html")) ||
+    existsSync(join(distDir, `${relative}.html`))
+  );
+}
+
+async function loadSitemapLastmods(): Promise<Record<string, string>> {
+  const enabled = ["1", "true", "yes", "on"].includes(
+    (process.env.SUPABASE_ENABLED || "").trim().toLowerCase()
+  );
+  const url = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
+  const key = process.env.SUPABASE_ANON_KEY || "";
+  if (!enabled || !url || !key) return {};
+
+  try {
+    const response = await fetch(
+      `${url}/rest/v1/pages?status=eq.published&robots_index=eq.true&select=path,updated_at`,
+      {
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`
+        }
+      }
+    );
+    if (!response.ok) return {};
+    const rows = (await response.json()) as Array<{
+      path: string;
+      updated_at: string;
+    }>;
+    return Object.fromEntries(
+      rows.map(row => [
+        row.path === "/" ? "/" : row.path.replace(/\/+$/, ""),
+        row.updated_at.slice(0, 10)
+      ])
+    );
+  } catch {
+    return {};
+  }
+}
+
+async function rewritePublishedSeoFiles(distDir: string) {
   const siteUrl = (
     process.env.PUBLIC_SITE_URL || "https://teorema-service.site"
   ).replace(/\/$/, "");
@@ -21,22 +68,24 @@ function rewritePublishedSeoFiles(distDir: string) {
     publicPath === "/" ? "/admin" : `${publicPath.replace(/\/$/, "")}/admin`;
 
   const robotsPath = join(distDir, "robots.txt");
-  if (existsSync(robotsPath)) {
-    const sitemapLine = `Sitemap: ${siteUrl}/sitemap.xml`;
-    writeFileSync(
-      robotsPath,
-      `User-agent: *\nAllow: /\nDisallow: ${adminPath}\n\n${sitemapLine}\n`
-    );
-  }
+  writeFileSync(
+    robotsPath,
+    `User-agent: *\nAllow: /\nDisallow: ${adminPath}\n\nSitemap: ${siteUrl}/sitemap.xml\n`
+  );
 
-  const sitemapPath = join(distDir, "sitemap.xml");
-  if (existsSync(sitemapPath)) {
-    const sitemap = readFileSync(sitemapPath, "utf8").replaceAll(
-      "<loc>/",
-      `<loc>${siteUrl}/`
-    );
-    writeFileSync(sitemapPath, sitemap);
-  }
+  const lastmods = await loadSitemapLastmods();
+  const entries = DEFAULT_SITEMAP_PATHS.filter(path =>
+    distHasPage(distDir, path)
+  ).map(path => {
+    const loc = path === "/" ? `${siteUrl}/` : `${siteUrl}${path}`;
+    const lastmod = lastmods[path] || CONTENT_UPDATED_AT;
+    return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+  });
+
+  writeFileSync(
+    join(distDir, "sitemap.xml"),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join("\n")}\n</urlset>\n`
+  );
 
   writeFileSync(join(distDir, ".nojekyll"), "");
   writeFileSync(join(distDir, "CNAME"), "teorema-service.site\n");
@@ -50,7 +99,7 @@ export default defineConfig(ctx => {
   }
 
   return {
-    boot: ["i18n", "supabase", "content", "seo"],
+    boot: ["i18n", "supabase", "content", "seo", "analytics"],
 
     css: ["app.scss"],
 
@@ -87,7 +136,7 @@ export default defineConfig(ctx => {
           typeof quasarConf.build.distDir === "string"
             ? quasarConf.build.distDir
             : join(ctx.appPaths.appDir, "dist/ssg");
-        rewritePublishedSeoFiles(distDir);
+        return rewritePublishedSeoFiles(distDir);
       },
 
       vitePlugins: [

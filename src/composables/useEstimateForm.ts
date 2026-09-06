@@ -1,8 +1,10 @@
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { Notify } from "quasar";
 import { supabase } from "@/boot/supabase";
-import { serviceFormOptions } from "@/data/services";
+import { useAnalytics } from "@/composables/useAnalytics";
+import { serviceFormOptionsFromServices } from "@/data/services";
 import { useLeadsStore } from "@/stores/leads";
+import { useSiteStore } from "@/stores/site";
 import type {
   EstimateFormPayload,
   EstimatePhoto,
@@ -37,6 +39,10 @@ function safeExtension(file: File): string {
 
 export function useEstimateForm() {
   const leads = useLeadsStore();
+  const { trackEvent } = useAnalytics();
+  const serviceOptions = computed(() =>
+    serviceFormOptionsFromServices(useSiteStore().publishedServices)
+  );
   const form = reactive<EstimateFormPayload>(createEmptyEstimate());
   const photos = ref<EstimatePhoto[]>([]);
   const isSubmitting = ref(false);
@@ -157,6 +163,7 @@ export function useEstimateForm() {
 
         leads.addEstimate({ ...payload, photoPaths, id: data?.id });
         isSuccess.value = true;
+        trackEvent("lead_submit_success", { form: "estimate" });
         Notify.create({ type: "positive", message: "Заявка отправлена" });
         return {
           ok: true,
@@ -205,7 +212,7 @@ export function useEstimateForm() {
     isSubmitting,
     isSuccess,
     errorMessage,
-    serviceOptions: serviceFormOptions,
+    serviceOptions,
     addFiles,
     removePhoto,
     submit,

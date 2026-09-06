@@ -7,11 +7,16 @@ import type {
   SocialLink,
   WorkingHours
 } from "@/types/contact";
+import {
+  DEFAULT_TITLE_TEMPLATE,
+  DEFAULT_TITLE_TEMPLATE_NO_CITY
+} from "@/utils/seoTemplates";
 
 export const PHONE_PRIMARY_RAW = "+375445189432";
 export const PHONE_PRIMARY_DISPLAY = "+375 44 518 94 32";
 
 export const BUSINESS_CITY = "Минск";
+export const BUSINESS_CITY_PREPOSITIONAL = "Минске";
 export const BUSINESS_STREET = "ул. Солтыса, 108";
 export const BUSINESS_ADDRESS = `г. ${BUSINESS_CITY}, ${BUSINESS_STREET}`;
 export const BUSINESS_LAT_DEFAULT = 53.89247;
@@ -54,14 +59,19 @@ export const workingHours: WorkingHours = {
 
 export const businessLocation: BusinessLocation = {
   address: BUSINESS_ADDRESS,
+  street: BUSINESS_STREET,
+  city: BUSINESS_CITY,
   lat: envNumber("BUSINESS_LAT") ?? BUSINESS_LAT_DEFAULT,
-  lng: envNumber("BUSINESS_LNG") ?? BUSINESS_LNG_DEFAULT
+  lng: envNumber("BUSINESS_LNG") ?? BUSINESS_LNG_DEFAULT,
+  mapsUrl: ""
 };
 
 export const siteCta: SiteCta = {
   call: "Позвонить",
-  book: "Записаться на сервис",
+  book: "Записаться в сервис",
   bookShort: "Записаться",
+  clarifyPrice: "Уточнить стоимость",
+  clarifyPriceShort: "Стоимость",
   estimate: "Рассчитать ремонт по фото",
   estimateShort: "Фотооценка",
   sendPhotos: "Отправить фотографии",
@@ -72,13 +82,15 @@ export const siteCta: SiteCta = {
 };
 
 export const seoDefaults: SeoDefaults = {
-  title: "СТО Teorema Service — ремонт, стапель, покраска и полировка",
+  title: "Автосервис в Минске — ремонт и обслуживание | Teorema Service",
   description:
-    "СТО Teorema Service в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка. ул. Солтыса, 108.",
+    "Teorema Service в Минске: обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта. Кузовной ремонт, покраска, шиномонтаж, заправка кондиционеров и полировка. ул. Солтыса, 108.",
   siteUrl: envText("PUBLIC_SITE_URL") || DEFAULT_SITE_URL,
-  ogImage: "/images/og-cover.jpg",
+  ogImage: "/logo.png",
   locale: "ru_BY",
-  robots: "index, follow"
+  robots: "index, follow",
+  titleTemplate: DEFAULT_TITLE_TEMPLATE,
+  titleTemplateNoCity: DEFAULT_TITLE_TEMPLATE_NO_CITY
 };
 
 export const defaultMessengers: MessengerLink[] = [
@@ -122,6 +134,9 @@ export interface SiteConfig {
   tagline: string;
   shortDescription: string;
   about: string;
+  city: string;
+  cityPrepositional: string;
+  street: string;
   email: string;
   phones: SitePhone[];
   address: string;
@@ -132,16 +147,24 @@ export interface SiteConfig {
   cta: SiteCta;
   seo: SeoDefaults;
   logo: string;
+  yandexVerification: string;
+  googleVerification: string;
+  yandexMetrikaId: string;
+  gaMeasurementId: string;
 }
 
 export const siteConfig: SiteConfig = {
   name: "Teorema Service",
   legalName: "Teorema Service",
-  tagline: "СТО, ремонт любой сложности, стапель, покраска и полировка",
+  tagline:
+    "Обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта",
   shortDescription:
-    "СТО в Минске: ремонт любой сложности, стапель, покрасочная камера и полировка.",
+    "Автосервис в Минске: легковые автомобили и лёгкий коммерческий транспорт. Ремонт, кузовные работы, покраска, шиномонтаж, заправка кондиционеров и полировка.",
   about:
-    "Teorema Service — автосервис в Минске. Делаем СТО и ремонт любой сложности, работаем на стапеле, красим в камере и полируем кузов.",
+    "Teorema Service — автосервис в Минске. Обслуживаем легковые автомобили и лёгкий коммерческий транспорт, включая небольшие грузовики.",
+  city: BUSINESS_CITY,
+  cityPrepositional: BUSINESS_CITY_PREPOSITIONAL,
+  street: BUSINESS_STREET,
   email: "",
   phones: sitePhones,
   address: businessLocation.address,
@@ -151,8 +174,17 @@ export const siteConfig: SiteConfig = {
   businessLocation,
   cta: siteCta,
   seo: seoDefaults,
-  logo: "/logo.png"
+  logo: "/logo.png",
+  yandexVerification: "",
+  googleVerification: "",
+  yandexMetrikaId: "",
+  gaMeasurementId: ""
 };
+
+export function composeAddress(city: string, street: string): string {
+  const parts = [city ? `г. ${city}` : "", street].filter(Boolean);
+  return parts.join(", ");
+}
 
 export function cloneSiteConfig(source: SiteConfig = siteConfig): SiteConfig {
   return structuredClone(source);

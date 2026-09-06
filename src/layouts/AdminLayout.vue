@@ -68,7 +68,8 @@ const drawer = ref(false);
 
 const nav = [
   { label: "Сводка", to: "/admin", icon: "mdi-view-dashboard" },
-  { label: "Контакты", to: "/admin/settings", icon: "mdi-card-account-phone" },
+  { label: "Страницы и SEO", to: "/admin/pages", icon: "mdi-file-document-edit" },
+  { label: "Настройки сайта", to: "/admin/settings", icon: "mdi-cog" },
   { label: "Работы", to: "/admin/works", icon: "mdi-image-multiple" },
   { label: "Отзывы", to: "/admin/reviews", icon: "mdi-star-outline" },
   { label: "Заявки", to: "/admin/leads", icon: "mdi-inbox" }

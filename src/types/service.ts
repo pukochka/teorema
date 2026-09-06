@@ -1,9 +1,6 @@
-export type CoreServiceId =
-  | "auto-service"
-  | "repair"
-  | "frame-repair"
-  | "painting"
-  | "polishing";
+import type { ServiceId } from "./page";
+
+export type CoreServiceId = ServiceId;
 
 export interface CoreService {
   id: CoreServiceId;

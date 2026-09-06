@@ -112,7 +112,7 @@
       text-color="dark"
       type="submit"
       icon="mdi-calendar"
-      label="Записаться на сервис"
+      :label="bookLabel"
       :loading="isSubmitting"
     />
   </q-form>
@@ -122,6 +122,7 @@
 import ConsentNote from "@/components/common/ConsentNote.vue";
 import PhoneButton from "@/components/common/PhoneButton.vue";
 import { useBookingForm } from "@/composables/useBookingForm";
+import { useSiteStore } from "@/stores/site";
 import {
   consentRule,
   phoneRule,
@@ -136,6 +137,7 @@ const {
   serviceOptions,
   submit
 } = useBookingForm();
+const bookLabel = useSiteStore().config.cta.book;
 
 async function onSubmit() {
   await submit();

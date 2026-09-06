@@ -5,35 +5,31 @@
       <SectionHeading
         heading-tag="h1"
         eyebrow="Портфолио"
-        title="Наши работы"
-        subtitle="Примеры работ по СТО, ремонту, стапелю, покраске и полировке."
+        :title="page?.h1 || 'Наши работы'"
+        :subtitle="page?.subtitle || 'Публикуем только реальные фотографии выполненных работ.'"
       />
       <div class="q-mt-xl">
         <WorkGallery />
       </div>
-      <div class="q-mt-xl">
-        <SectionHeading
-          title="Пример сравнения до и после"
-          subtitle="Слот готов к реальным фотографиям."
-        />
-        <div class="q-mt-md">
-          <BeforeAfterSlider />
-        </div>
-      </div>
     </section>
     <div class="page-shell q-pb-xl">
-      <ContactCTA />
+      <ContactCTA :estimate-label="site.cta.clarifyPrice" />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import ContactCTA from "@/components/common/ContactCTA.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
-import BeforeAfterSlider from "@/components/works/BeforeAfterSlider.vue";
 import WorkGallery from "@/components/works/WorkGallery.vue";
 import { useSeo } from "@/composables/useSeo";
+import { useSiteStore } from "@/stores/site";
+
+const store = useSiteStore();
+const site = store.config;
+const page = computed(() => store.pageByPath("/works"));
 
 useSeo();
 </script>

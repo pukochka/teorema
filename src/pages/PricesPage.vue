@@ -5,8 +5,11 @@
       <SectionHeading
         heading-tag="h1"
         eyebrow="Стоимость"
-        title="Цены на услуги"
-        subtitle="Мы не публикуем выдуманные прайсы. Стоимость работ зависит от автомобиля и фактического объёма ремонта."
+        :title="page?.h1 || 'Цены на услуги'"
+        :subtitle="
+          page?.subtitle ||
+          'Мы не публикуем выдуманные прайсы. Стоимость работ зависит от автомобиля и фактического объёма ремонта.'
+        "
       />
 
       <q-list bordered class="rounded-borders q-mt-xl">
@@ -46,7 +49,7 @@
       </q-list>
     </section>
     <div class="page-shell q-pb-xl">
-      <ContactCTA />
+      <ContactCTA :estimate-label="store.config.cta.clarifyPrice" />
     </div>
   </q-page>
 </template>
@@ -55,8 +58,16 @@
 import ContactCTA from "@/components/common/ContactCTA.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
-import { priceCategories } from "@/data/services";
+import { computed } from "vue";
+import { priceCategoriesFromServices } from "@/data/services";
 import { useSeo } from "@/composables/useSeo";
+import { useSiteStore } from "@/stores/site";
+
+const store = useSiteStore();
+const page = computed(() => store.pageByPath("/prices"));
+const priceCategories = computed(() =>
+  priceCategoriesFromServices(store.publishedServices)
+);
 
 useSeo();
 </script>

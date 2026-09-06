@@ -14,6 +14,7 @@
           :label="telegram.name"
           :href="hrefFor(telegram)"
           :aria-label="site.config.cta.telegram"
+          @click="onMessengerClick('telegram')"
         />
         <q-btn
           v-if="viber"
@@ -25,6 +26,7 @@
           :href="hrefFor(viber)"
           :label="viber.name"
           :aria-label="site.config.cta.viber"
+          @click="onMessengerClick('viber')"
         />
         <q-btn
           flat
@@ -35,6 +37,7 @@
           :label="site.config.cta.call"
           :href="href"
           :aria-label="`Позвонить ${primaryDisplay}`"
+          @click="onPhoneClick"
         />
       </template>
       <template v-else>
@@ -47,6 +50,7 @@
           :label="site.config.cta.call"
           :href="href"
           :aria-label="`Позвонить ${primaryDisplay}`"
+          @click="onPhoneClick"
         />
         <q-btn
           unelevated
@@ -75,6 +79,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { useMessengers } from "@/composables/useMessengers";
 import { usePhone } from "@/composables/usePhone";
 import { useSiteStore } from "@/stores/site";
@@ -82,5 +87,14 @@ import { useSiteStore } from "@/stores/site";
 const site = useSiteStore();
 const { primaryDisplay, primaryRaw, toTelHref } = usePhone();
 const { hasMessengers, telegram, viber, hrefFor } = useMessengers();
+const { trackEvent } = useAnalytics();
 const href = computed(() => toTelHref(primaryRaw.value));
+
+function onPhoneClick() {
+  trackEvent("phone_click", { place: "mobile-bar" });
+}
+
+function onMessengerClick(network: string) {
+  trackEvent("messenger_click", { network });
+}
 </script>

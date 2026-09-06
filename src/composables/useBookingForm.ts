@@ -1,8 +1,10 @@
-import { reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { Notify } from "quasar";
 import { supabase } from "@/boot/supabase";
-import { serviceFormOptions } from "@/data/services";
+import { useAnalytics } from "@/composables/useAnalytics";
+import { serviceFormOptionsFromServices } from "@/data/services";
 import { useLeadsStore } from "@/stores/leads";
+import { useSiteStore } from "@/stores/site";
 import type { BookingFormPayload, BookingSubmitResult } from "@/types/booking";
 
 function createEmptyBooking(): BookingFormPayload {
@@ -19,6 +21,10 @@ function createEmptyBooking(): BookingFormPayload {
 
 export function useBookingForm() {
   const leads = useLeadsStore();
+  const { trackEvent } = useAnalytics();
+  const serviceOptions = computed(() =>
+    serviceFormOptionsFromServices(useSiteStore().publishedServices)
+  );
   const form = reactive<BookingFormPayload>(createEmptyBooking());
   const isSubmitting = ref(false);
   const isSuccess = ref(false);
@@ -55,6 +61,7 @@ export function useBookingForm() {
         if (error) throw new Error("Не удалось отправить заявку");
         leads.addBooking({ ...payload, id: data?.id });
         isSuccess.value = true;
+        trackEvent("lead_submit_success", { form: "booking" });
         Notify.create({ type: "positive", message: "Заявка отправлена" });
         return { ok: true, id: data?.id, message: "Заявка отправлена" };
       }
@@ -92,7 +99,7 @@ export function useBookingForm() {
     isSubmitting,
     isSuccess,
     errorMessage,
-    serviceOptions: serviceFormOptions,
+    serviceOptions,
     submit,
     reset
   };

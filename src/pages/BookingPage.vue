@@ -5,7 +5,7 @@
       <SectionHeading
         heading-tag="h1"
         eyebrow="Онлайн-запись"
-        title="Записаться на сервис"
+        :title="page?.h1 || 'Записаться в сервис'"
         :subtitle="
           hasMessengers
             ? 'Самый быстрый способ — написать в Telegram или Viber. Форму можно оставить, если мессенджеры неудобны.'
@@ -33,9 +33,19 @@ import MessengerPrompt from "@/components/common/MessengerPrompt.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import BookingForm from "@/components/forms/BookingForm.vue";
+import { computed, onMounted } from "vue";
+import { useAnalytics } from "@/composables/useAnalytics";
 import { useMessengers } from "@/composables/useMessengers";
 import { useSeo } from "@/composables/useSeo";
+import { useSiteStore } from "@/stores/site";
 
+const page = computed(() => useSiteStore().pageByPath("/booking"));
 const { hasMessengers } = useMessengers();
+const { trackEvent } = useAnalytics();
+
+onMounted(() => {
+  trackEvent("booking_form_open");
+});
+
 useSeo();
 </script>

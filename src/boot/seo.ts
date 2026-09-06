@@ -1,12 +1,15 @@
 import { defineBoot } from "#q-app";
-import { siteConfig } from "@/config/site";
+import { useSiteStore } from "@/stores/site";
+import { normalizePath } from "@/utils/paths";
 import { isClient } from "@/utils/ssr";
 
 export default defineBoot(({ router }) => {
   router.afterEach(to => {
     if (!isClient) return;
-    document.title = to.meta.title
-      ? String(to.meta.title)
-      : siteConfig.seo.title;
+    const site = useSiteStore();
+    const page = site.pageByPath(normalizePath(to.path));
+    document.title =
+      page?.seoTitle ||
+      (to.meta.title ? String(to.meta.title) : site.config.seo.title);
   });
 });

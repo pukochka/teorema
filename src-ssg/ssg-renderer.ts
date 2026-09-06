@@ -8,14 +8,45 @@
 import { defineSsgGetPages, defineSsgRenderPreloadTag } from "#q-app";
 import routes from "@/router/routes";
 
+async function draftPaths(): Promise<string[]> {
+  const enabled = ["1", "true", "yes", "on"].includes(
+    (process.env.SUPABASE_ENABLED || "").trim().toLowerCase()
+  );
+  const url = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
+  const key = process.env.SUPABASE_ANON_KEY || "";
+  if (!enabled || !url || !key) return [];
+
+  try {
+    const response = await fetch(
+      `${url}/rest/v1/page_visibility?status=eq.draft&select=path`,
+      {
+        headers: {
+          apikey: key,
+          Authorization: `Bearer ${key}`
+        }
+      }
+    );
+    if (!response.ok) return [];
+    const rows = (await response.json()) as Array<{ path: string }>;
+    return rows.map(row => row.path);
+  } catch {
+    return [];
+  }
+}
+
 export const getSsgPages = defineSsgGetPages(
   async ({ parseVueRouterRoutes }) => {
+    const hidden = await draftPaths();
     const { ssgPages } = await parseVueRouterRoutes({
       routes,
       verbose: true
     });
 
-    return ssgPages;
+    return ssgPages.filter(page => {
+      const raw = JSON.stringify(page);
+      if (raw.includes("/:")) return false;
+      return !hidden.some(path => raw.includes(`"${path}"`) || raw.includes(path));
+    });
   }
 );
 

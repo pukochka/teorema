@@ -40,8 +40,8 @@
 
     <EmptyState
       v-if="filtered.length === 0"
-      title="Фотографии выполненных работ скоро появятся здесь."
-      text="Структура карточек уже готова: марка, модель, повреждение, работы, фото до / процесс / после."
+      title="Примеры работ появятся здесь, когда будут реальные фотографии."
+      text="Публикуем только выполненные заказы, без вымышленных примеров."
       icon="mdi-image-multiple"
     />
 
@@ -69,7 +69,9 @@ function matchesWorkCategory(
   if (itemCategory === selected) return true;
   return (
     selected === "repair" &&
-    (itemCategory === "body" || itemCategory === "accident")
+    (itemCategory === "body" ||
+      itemCategory === "accident" ||
+      itemCategory === "sto")
   );
 }
 

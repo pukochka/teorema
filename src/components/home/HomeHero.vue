@@ -4,29 +4,29 @@
     <div class="page-shell">
       <div class="home-hero__content">
         <q-badge
+          v-if="cityBadge"
           color="accent"
           text-color="dark"
           class="q-mb-md"
         >
-          СТО в Минске
+          {{ cityBadge }}
         </q-badge>
 
         <h1 class="heading-display q-ma-none">
-          СТО, ремонт любой сложности, стапель, покраска и полировка
+          {{ page?.h1 || fallbackH1 }}
         </h1>
         <p class="q-mt-md text-body1">
-          Базовый автосервис: обслуживание, ремонт, стапель, покрасочная камера
-          и полировка.
+          {{ page?.subtitle || fallbackSubtitle }}
         </p>
         <div class="hero-highlights q-mb-lg">
           <q-chip
             outline
             dense
             color="primary"
-            :key="item"
+            :key="item.id"
             v-for="item in highlights"
           >
-            {{ item }}
+            {{ item.title }}
           </q-chip>
         </div>
         <div class="cta-row q-mb-lg">
@@ -45,7 +45,7 @@
             color="primary"
             icon="mdi-camera"
             to="/estimate"
-            :label="site.cta.estimate"
+            :label="site.cta.clarifyPrice"
           />
         </div>
         <div class="column q-gutter-sm">
@@ -71,11 +71,20 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import BrandStripe from "@/components/common/BrandStripe.vue";
 import PhoneButton from "@/components/common/PhoneButton.vue";
-import { coreServices } from "@/data/services";
 import { useSiteStore } from "@/stores/site";
 
-const site = useSiteStore().config;
-const highlights = coreServices.map(item => item.title);
+const store = useSiteStore();
+const site = store.config;
+const page = computed(() => store.pageByPath("/"));
+const highlights = computed(() => store.homeServiceCards);
+const cityBadge = computed(() =>
+  site.city ? `Автосервис в ${site.cityPrepositional || site.city}` : "Автосервис"
+);
+const fallbackH1 =
+  "Обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта";
+const fallbackSubtitle =
+  "От планового обслуживания до ремонта любой сложности. Кузовной ремонт на стапеле, покраска в камере, шиномонтаж, заправка кондиционеров и полировка кузова — в одном автосервисе";
 </script>
