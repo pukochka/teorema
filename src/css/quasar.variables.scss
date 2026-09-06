@@ -1,25 +1,42 @@
-// Quasar Sass (& SCSS) Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass/SCSS variables found in Quasar's source Sass/SCSS files.
+// Teorema Service brand tokens
+$brand-blue: #0785b4;
+$brand-blue-dark: #056b91;
+$brand-orange: #f5a83d;
+$brand-yellow: #f4d329;
+$brand-white: #ffffff;
+$brand-dark: #102a36;
+$brand-light: #f5f8fa;
+$brand-gray: #667782;
 
-// Check documentation for full list of Quasar variables
+$primary: #0785b4;
+$secondary: #f5a83d;
+$accent: #f4d329;
 
-// Your own variables (that are declared here) and Quasar's own
-// ones will be available out of the box in your .vue/.scss/.sass files
-
-// It's highly recommended to change the default colors
-// to match your app's branding.
-// Tip: Use the "Theme Builder" on Quasar's documentation website.
-
-$primary: #1976d2;
-$secondary: #26a69a;
-$accent: #9c27b0;
-
-$dark: #1d1d1d;
-$dark-page: #121212;
-
+$dark: #102a36;
+$dark-page: #102a36;
 $positive: #21ba45;
 $negative: #c10015;
-$info: #31ccec;
-$warning: #f2c037;
+$info: #0785b4;
+$warning: #f5a83d;
+
+$radius-sm: 8px;
+$radius-md: 14px;
+$radius-lg: 24px;
+
+$generic-border-radius: $radius-md;
+$button-border-radius: 10px;
+$card-border-radius: $radius-md;
+
+$typography-font-family: "Manrope", system-ui, sans-serif;
+$body-font-size: 16px;
+$body-line-height: 1.65;
+$button-font-size: 15px;
+$button-padding: 12px 20px;
+$button-font-weight: 600;
+
+$header-text-color: #ffffff;
+$layout-shadow: 0 8px 24px rgba(16, 42, 54, 0.06);
+
+$touch-min: 44px;
+$space-section-sm: 48px;
+$space-section-lg: 96px;

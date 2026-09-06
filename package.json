@@ -2,7 +2,7 @@
   "name": "teorema-service",
   "version": "0.0.1",
   "private": true,
-  "description": "A Quasar Project",
+  "description": "СТО Teorema Service: техническое обслуживание автомобилей, кузовной ремонт, покраска в покрасочной камере, стапельные работы и обслуживание коммерческого транспорта.",
   "keywords": [
     "quasar",
     "quasar-app",
@@ -18,12 +18,15 @@
     "lint": "oxfmt && oxlint --fix",
     "lint:check": "oxfmt --check && oxlint",
     "dev": "quasar dev",
+    "dev:ssr": "quasar dev -m ssr",
     "build": "quasar build",
+    "build:ssr": "quasar build -m ssr",
     "typecheck": "vue-tsc --noEmit",
     "postinstall": "quasar prepare --silent"
   },
   "dependencies": {
     "@quasar/extras": "^2.0.4",
+    "@supabase/supabase-js": "^2.57.4",
     "pinia": "^4.0.2",
     "quasar": "^2.26.0",
     "vue": "^3.5.22",
@@ -45,5 +48,5 @@
   "engines": {
     "node": ">= 26 || ^24 || ^22.12"
   },
-  "productName": "Teorema-Service"
+  "productName": "Teorema Service"
 }

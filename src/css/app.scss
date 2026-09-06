@@ -1,1 +1,252 @@
-// app global css
+@import "@quasar/extras/mdi-v7/mdi-v7.css";
+
+:root {
+  --brand-blue: #{$brand-blue};
+  --brand-blue-dark: #{$brand-blue-dark};
+  --brand-orange: #{$brand-orange};
+  --brand-yellow: #{$brand-yellow};
+  --brand-white: #{$brand-white};
+  --brand-dark: #{$brand-dark};
+  --brand-light: #{$brand-light};
+  --brand-gray: #{$brand-gray};
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --touch-min: #{$touch-min};
+  --focus-ring: 0 0 0 3px rgba(7, 133, 180, 0.4);
+  --card-shadow: 0 8px 24px rgba(16, 42, 54, 0.06);
+  --card-border: 1px solid rgba(7, 133, 180, 0.1);
+}
+
+html,
+body,
+#q-app {
+  min-height: 100%;
+  background: $brand-light;
+  color: $brand-dark;
+}
+
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.text-h1,
+.text-h2,
+.text-h3,
+.heading-display,
+.section-heading {
+  font-family: "Oswald", "Manrope", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  color: $brand-dark;
+}
+
+.heading-display {
+  font-size: clamp(1.9rem, 8vw, 4.75rem);
+}
+
+.section-heading {
+  font-size: clamp(1.7rem, 3.4vw, 3rem);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: $brand-blue;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.page-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.page-section {
+  position: relative;
+  padding-top: $space-section-sm;
+  padding-bottom: $space-section-sm;
+}
+
+.surface-card {
+  overflow: hidden;
+  border: var(--card-border);
+  background: $brand-white;
+  box-shadow: none;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.surface-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: $radius-sm;
+  background: rgba(7, 133, 180, 0.1);
+  color: $brand-blue;
+}
+
+.surface-icon--accent {
+  background: rgba(245, 168, 61, 0.16);
+  color: $brand-orange;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cta-row .q-btn {
+  min-height: $touch-min;
+}
+
+.page-crumbs {
+  overflow: hidden;
+  min-width: 0;
+}
+
+.page-crumbs .q-breadcrumbs {
+  flex-wrap: nowrap;
+}
+
+.page-crumbs .q-breadcrumbs__el:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.q-btn {
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  min-height: $touch-min;
+}
+
+.q-card {
+  border-radius: $radius-md;
+}
+
+.q-field--outlined .q-field__control {
+  border-radius: 10px;
+  min-height: $touch-min;
+}
+
+.media-slot {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  border-radius: $radius-md;
+  background:
+    linear-gradient(135deg, rgba(7, 133, 180, 0.08), rgba(245, 168, 61, 0.12)),
+    $brand-light;
+  color: $brand-gray;
+  text-align: center;
+}
+
+.media-slot__label {
+  max-width: 18rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.brand-diagonal {
+  position: relative;
+  overflow: hidden;
+}
+
+.muted {
+  color: $brand-gray;
+}
+
+.btn-telegram {
+  background: #2aabee !important;
+  color: #fff !important;
+}
+
+.btn-viber {
+  background: #7360f2 !important;
+  color: #fff !important;
+}
+
+.mobile-action-offset {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+
+a:focus-visible,
+.q-btn:focus-visible,
+.q-field:focus-visible,
+.q-item:focus-visible,
+.q-checkbox:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+@media (min-width: 600px) {
+  .page-shell {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-section {
+    padding-top: $space-section-lg;
+    padding-bottom: $space-section-lg;
+  }
+
+  .surface-card {
+    box-shadow: var(--card-shadow);
+  }
+
+  .surface-card--interactive:hover {
+    transform: translateY(-4px);
+  }
+
+  .cta-row .q-btn {
+    width: auto;
+  }
+
+  .mobile-action-offset {
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  .cta-row .q-btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+
+  .surface-card--interactive:hover {
+    transform: none;
+  }
+}
