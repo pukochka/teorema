@@ -2,7 +2,7 @@
   "name": "teorema-service",
   "version": "0.0.1",
   "private": true,
-  "description": "Teorema Service в Минске: обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта.",
+  "description": "Teorema Service в Минске на ул. Солтыса, 108, корпус 3: обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта.",
   "keywords": [
     "quasar",
     "quasar-app",

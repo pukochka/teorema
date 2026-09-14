@@ -6,7 +6,7 @@
     <SectionHeading
       eyebrow="Вопросы"
       title="Ответы на частые вопросы"
-      subtitle="Коротко о том, какие автомобили принимаем и какие работы делаем."
+      :subtitle="subtitle"
     />
     <q-list
       bordered
@@ -32,7 +32,13 @@
 import SectionHeading from "@/components/common/SectionHeading.vue";
 import type { FaqItem } from "@/types/page";
 
-defineProps<{
-  items: FaqItem[];
-}>();
+withDefaults(
+  defineProps<{
+    items: FaqItem[];
+    subtitle?: string;
+  }>(),
+  {
+    subtitle: "Коротко о том, какие автомобили принимаем и какие работы делаем."
+  }
+);
 </script>

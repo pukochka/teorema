@@ -93,25 +93,65 @@ export function useSeo(input: SeoInput = {}) {
   });
 
   useMeta(() => {
-    const meta: Record<string, { name?: string; property?: string; content: string }> =
+    const location = site.config.businessLocation;
+    const keywords = firstNonEmpty(
+      site.config.seo.keywords,
+      seoDefaults.keywords
+    );
+    const imageAlt = firstNonEmpty(
+      page.value?.imageAlt,
+      site.config.seo.ogImageAlt,
+      seoDefaults.ogImageAlt,
+      site.config.name
+    );
+    const meta: Record<
+      string,
       {
-        description: { name: "description", content: description.value },
-        robots: { name: "robots", content: robots.value },
-        ogTitle: { property: "og:title", content: ogTitle.value },
-        ogDescription: { property: "og:description", content: ogDescription.value },
-        ogType: { property: "og:type", content: "website" },
-        ogLocale: { property: "og:locale", content: seoDefaults.locale },
-        ogSiteName: { property: "og:site_name", content: site.config.name },
-        ogImage: { property: "og:image", content: image.value },
-        ogUrl: { property: "og:url", content: canonical.value || path.value },
-        twitterCard: { name: "twitter:card", content: "summary_large_image" },
-        twitterTitle: { name: "twitter:title", content: ogTitle.value },
-        twitterDescription: {
-          name: "twitter:description",
-          content: ogDescription.value
-        },
-        twitterImage: { name: "twitter:image", content: image.value }
+        name?: string;
+        property?: string;
+        "http-equiv"?: string;
+        content: string;
+      }
+    > = {
+      description: { name: "description", content: description.value },
+      robots: { name: "robots", content: robots.value },
+      language: { "http-equiv": "content-language", content: "ru" },
+      ogTitle: { property: "og:title", content: ogTitle.value },
+      ogDescription: { property: "og:description", content: ogDescription.value },
+      ogType: { property: "og:type", content: "website" },
+      ogLocale: { property: "og:locale", content: seoDefaults.locale },
+      ogSiteName: { property: "og:site_name", content: site.config.name },
+      ogImage: { property: "og:image", content: image.value },
+      ogImageAlt: { property: "og:image:alt", content: imageAlt },
+      ogUrl: { property: "og:url", content: canonical.value || path.value },
+      twitterCard: { name: "twitter:card", content: "summary_large_image" },
+      twitterTitle: { name: "twitter:title", content: ogTitle.value },
+      twitterDescription: {
+        name: "twitter:description",
+        content: ogDescription.value
+      },
+      twitterImage: { name: "twitter:image", content: image.value }
+    };
+
+    if (keywords) {
+      meta.keywords = { name: "keywords", content: keywords };
+    }
+
+    meta.geoRegion = { name: "geo.region", content: "BY-MI" };
+    meta.geoPlacename = {
+      name: "geo.placename",
+      content: location.city || site.config.city || "Минск"
+    };
+    if (location.lat !== null && location.lng !== null) {
+      meta.geoPosition = {
+        name: "geo.position",
+        content: `${location.lat};${location.lng}`
       };
+      meta.icbm = {
+        name: "ICBM",
+        content: `${location.lat}, ${location.lng}`
+      };
+    }
 
     if (site.config.yandexVerification) {
       meta.yandexVerification = {

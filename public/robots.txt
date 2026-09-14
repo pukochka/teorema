@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&ysclid&yclid&gclid
 
-Sitemap: /sitemap.xml
+Sitemap: https://teorema-service.site/sitemap.xml

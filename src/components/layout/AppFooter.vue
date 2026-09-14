@@ -4,7 +4,7 @@
     <div class="page-shell q-py-xl">
       <div class="row q-col-gutter-lg">
         <div class="col-12 col-md-4">
-          <BrandLogo />
+          <BrandLogo white/>
           <p class="app-footer__about q-mt-md q-mb-none">
             {{ site.shortDescription }}
           </p>

@@ -6,7 +6,7 @@
   >
     <img
       class="brand-logo__image"
-      :src="logoUrl"
+      :src="white ? logoUrlWhite : logoUrl"
       alt="Teorema Service"
       width="280"
       height="64"
@@ -16,6 +16,11 @@
 
 <script setup lang="ts">
 import logoUrl from "@/assets/logo-black.png";
+import logoUrlWhite from "@/assets/logo.png";
+
+defineProps({
+  white:Boolean,
+})
 </script>
 
 <style lang="scss" scoped>

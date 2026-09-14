@@ -85,7 +85,7 @@ BUSINESS_LNG=
 - `SUPABASE_URL` и `SUPABASE_ANON_KEY` — публичные ключи проекта Supabase.
 - `PUBLIC_SITE_URL` — канонический адрес сайта. По умолчанию `https://teorema-service.site`.
 - `PUBLIC_PATH` — для своего домена оставляйте `/`.
-- `BUSINESS_LAT` и `BUSINESS_LNG` — необязательное уточнение координат. По умолчанию карта показывает **г. Минск, ул. Солтыса, 108**.
+- `BUSINESS_LAT` и `BUSINESS_LNG` — необязательное уточнение координат. По умолчанию карта показывает **г. Минск, ул. Солтыса, 108, корпус 3**.
 
 Секреты Resend и `service_role` в frontend `.env` не класть. Они задаются только в Supabase Edge Functions.
 
@@ -236,9 +236,10 @@ npx supabase functions deploy submit-fleet-request
 - SSR и SSG-режимы Quasar
 - `useMeta` / `useSeo` на страницах
 - Open Graph, canonical, robots
-- JSON-LD `AutoRepair`
-- `public/robots.txt`
-- `public/sitemap.xml` — после запуска замените пути на абсолютные URL из `PUBLIC_SITE_URL`
+- JSON-LD `AutoRepair` и `WebSite`
+- geo-мета и keywords для Яндекса
+- `public/robots.txt` с абсолютным Sitemap и `Clean-param`
+- `public/sitemap.xml` — после SSG-сборки пути абсолютные из `PUBLIC_SITE_URL`
 
 ## Будущий статус ремонта
 

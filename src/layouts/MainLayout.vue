@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { stringifyJsonLd, useAutoRepairJsonLd } from "@/composables/useJsonLd";
+import { stringifyJsonLd, useSiteGraphJsonLd } from "@/composables/useJsonLd";
 import { useSeo } from "@/composables/useSeo";
 import AppDrawer from "@/components/layout/AppDrawer.vue";
 import AppFooter from "@/components/layout/AppFooter.vue";
@@ -25,6 +25,6 @@ import MobileActionBar from "@/components/layout/MobileActionBar.vue";
 
 useSeo();
 
-const autoRepair = useAutoRepairJsonLd();
-const jsonLd = computed(() => stringifyJsonLd(autoRepair.value));
+const siteGraph = useSiteGraphJsonLd();
+const jsonLd = computed(() => stringifyJsonLd(siteGraph.value));
 </script>

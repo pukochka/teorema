@@ -66,9 +66,21 @@
       </div>
     </section>
 
+    <FaqSection
+      subtitle="Где мы находимся и кого принимаем."
+      :items="page?.faq ?? []"
+    />
+
     <div class="page-shell q-pb-xl">
       <ContactCTA :estimate-label="site.cta.clarifyPrice" />
     </div>
+
+    <component
+      :is="'script'"
+      v-if="faqLd"
+      type="application/ld+json"
+      v-html="faqLd"
+    />
   </q-page>
 </template>
 
@@ -78,6 +90,8 @@ import ContactCTA from "@/components/common/ContactCTA.vue";
 import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
 import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
+import FaqSection from "@/components/home/FaqSection.vue";
+import { faqJsonLd, stringifyJsonLd } from "@/composables/useJsonLd";
 import { useSeo } from "@/composables/useSeo";
 import { useSiteStore } from "@/stores/site";
 
@@ -85,6 +99,10 @@ const store = useSiteStore();
 const site = store.config;
 const page = computed(() => store.pageByPath("/about"));
 const services = computed(() => store.publishedServices);
+const faqLd = computed(() => {
+  const data = faqJsonLd(page.value?.faq ?? []);
+  return data ? stringifyJsonLd(data) : "";
+});
 
 useSeo();
 </script>

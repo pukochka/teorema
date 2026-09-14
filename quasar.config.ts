@@ -70,7 +70,7 @@ async function rewritePublishedSeoFiles(distDir: string) {
   const robotsPath = join(distDir, "robots.txt");
   writeFileSync(
     robotsPath,
-    `User-agent: *\nAllow: /\nDisallow: ${adminPath}\n\nSitemap: ${siteUrl}/sitemap.xml\n`
+    `User-agent: *\nAllow: /\nDisallow: ${adminPath}\nClean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&ysclid&yclid&gclid\n\nSitemap: ${siteUrl}/sitemap.xml\n`
   );
 
   const lastmods = await loadSitemapLastmods();

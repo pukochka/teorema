@@ -25,6 +25,9 @@ export interface BusinessLocation {
   address: string;
   street: string;
   city: string;
+  postalCode: string;
+  district: string;
+  neighborhood: string;
   lat: number | null;
   lng: number | null;
   mapsUrl: string;
@@ -41,6 +44,8 @@ export interface SeoDefaults {
   description: string;
   siteUrl: string;
   ogImage: string;
+  ogImageAlt: string;
+  keywords: string;
   locale: string;
   robots: string;
   titleTemplate: string;

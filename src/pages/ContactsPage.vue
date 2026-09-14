@@ -104,19 +104,53 @@
         </div>
       </div>
     </section>
+
+    <section
+      v-if="page?.blocks.length"
+      class="page-section page-shell"
+    >
+      <div
+        v-for="item in page.blocks"
+        :key="item.id"
+        class="q-mb-lg"
+      >
+        <h2
+          v-if="item.title"
+          class="text-h5 q-mt-none"
+        >
+          {{ item.title }}
+        </h2>
+
+        <p class="text-body1 q-mb-none">{{ item.text }}</p>
+      </div>
+    </section>
+
+    <FaqSection
+      subtitle="Как нас найти и когда мы работаем."
+      :items="page?.faq ?? []"
+    />
+
+    <component
+      :is="'script'"
+      v-if="faqLd"
+      type="application/ld+json"
+      v-html="faqLd"
+    />
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import MapEmbed from "@/components/common/MapEmbed.vue";
 import MediaPlaceholder from "@/components/common/MediaPlaceholder.vue";
-import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import MessengerButtons from "@/components/common/MessengerButtons.vue";
+import PageCrumbs from "@/components/common/PageCrumbs.vue";
 import SectionHeading from "@/components/common/SectionHeading.vue";
+import FaqSection from "@/components/home/FaqSection.vue";
+import { useAnalytics } from "@/composables/useAnalytics";
+import { faqJsonLd, stringifyJsonLd } from "@/composables/useJsonLd";
 import { useMessengers } from "@/composables/useMessengers";
 import { toTelHref } from "@/composables/usePhone";
-import { computed } from "vue";
-import { useAnalytics } from "@/composables/useAnalytics";
 import { useSeo } from "@/composables/useSeo";
 import { useSiteStore } from "@/stores/site";
 
@@ -125,6 +159,10 @@ const site = store.config;
 const page = computed(() => store.pageByPath("/contacts"));
 const { messengers, hasMessengers, hrefFor } = useMessengers();
 const { trackEvent } = useAnalytics();
+const faqLd = computed(() => {
+  const data = faqJsonLd(page.value?.faq ?? []);
+  return data ? stringifyJsonLd(data) : "";
+});
 
 function onPhoneClick() {
   trackEvent("phone_click", { place: "contacts" });

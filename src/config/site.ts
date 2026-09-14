@@ -17,10 +17,20 @@ export const PHONE_PRIMARY_DISPLAY = "+375 44 518 94 32";
 
 export const BUSINESS_CITY = "Минск";
 export const BUSINESS_CITY_PREPOSITIONAL = "Минске";
-export const BUSINESS_STREET = "ул. Солтыса, 108";
+export const BUSINESS_STREET = "ул. Солтыса, 108, корпус 3";
 export const BUSINESS_ADDRESS = `г. ${BUSINESS_CITY}, ${BUSINESS_STREET}`;
+export const BUSINESS_POSTAL_CODE = "220070";
+export const BUSINESS_DISTRICT = "Партизанский район";
+export const BUSINESS_NEIGHBORHOOD = "Дражня";
 export const BUSINESS_LAT_DEFAULT = 53.89247;
 export const BUSINESS_LNG_DEFAULT = 27.65518;
+export const BUSINESS_AREA_SERVED = [
+  BUSINESS_CITY,
+  BUSINESS_NEIGHBORHOOD,
+  BUSINESS_DISTRICT
+];
+export const SEO_KEYWORDS =
+  "автосервис Минск, СТО Минск, Солтыса, Дражня, кузовной ремонт, покраска автомобиля, шиномонтаж";
 
 export const SITE_DOMAIN = "teorema-service.site";
 export const DEFAULT_SITE_URL = `https://${SITE_DOMAIN}`;
@@ -61,6 +71,9 @@ export const businessLocation: BusinessLocation = {
   address: BUSINESS_ADDRESS,
   street: BUSINESS_STREET,
   city: BUSINESS_CITY,
+  postalCode: BUSINESS_POSTAL_CODE,
+  district: BUSINESS_DISTRICT,
+  neighborhood: BUSINESS_NEIGHBORHOOD,
   lat: envNumber("BUSINESS_LAT") ?? BUSINESS_LAT_DEFAULT,
   lng: envNumber("BUSINESS_LNG") ?? BUSINESS_LNG_DEFAULT,
   mapsUrl: ""
@@ -82,11 +95,13 @@ export const siteCta: SiteCta = {
 };
 
 export const seoDefaults: SeoDefaults = {
-  title: "Автосервис в Минске — ремонт и обслуживание | Teorema Service",
+  title: "Автосервис в Минске на Солтыса — СТО | Teorema Service",
   description:
-    "Teorema Service в Минске: обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта. Кузовной ремонт, покраска, шиномонтаж, заправка кондиционеров и полировка. ул. Солтыса, 108.",
+    "СТО в Минске на ул. Солтыса, 108, корпус 3 (Дражня): ремонт, кузовной ремонт, покраска, шиномонтаж и полировка. Запись по телефону или на сайте.",
   siteUrl: envText("PUBLIC_SITE_URL") || DEFAULT_SITE_URL,
   ogImage: "/logo.png",
+  ogImageAlt: "Логотип автосервиса Teorema Service в Минске",
+  keywords: SEO_KEYWORDS,
   locale: "ru_BY",
   robots: "index, follow",
   titleTemplate: DEFAULT_TITLE_TEMPLATE,
@@ -159,9 +174,9 @@ export const siteConfig: SiteConfig = {
   tagline:
     "Обслуживание и ремонт легковых автомобилей и лёгкого коммерческого транспорта",
   shortDescription:
-    "Автосервис в Минске: легковые автомобили и лёгкий коммерческий транспорт. Ремонт, кузовные работы, покраска, шиномонтаж, заправка кондиционеров и полировка.",
+    "Автосервис в Минске на ул. Солтыса, 108, корпус 3: легковые автомобили и лёгкий коммерческий транспорт. Ремонт, кузовные работы, покраска, шиномонтаж, заправка кондиционеров и полировка.",
   about:
-    "Teorema Service — автосервис в Минске. Обслуживаем легковые автомобили и лёгкий коммерческий транспорт, включая небольшие грузовики.",
+    "Teorema Service — автосервис в Минске на ул. Солтыса, 108, корпус 3 (Дражня). Обслуживаем легковые автомобили и лёгкий коммерческий транспорт, включая небольшие грузовики.",
   city: BUSINESS_CITY,
   cityPrepositional: BUSINESS_CITY_PREPOSITIONAL,
   street: BUSINESS_STREET,
